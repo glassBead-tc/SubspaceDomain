@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="6" failures="1" errors="0" time="0.626">
+  <testsuite name="PromptAnalyzer - extractDependencies" errors="0" failures="1" skipped="0" timestamp="2025-04-15T18:25:46" time="0.591" tests="6">
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for null prompt" time="0.001">
+    </testcase>
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for empty prompt" time="0.001">
+    </testcase>
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for prompt with no dependencies" time="0">
+    </testcase>
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract a simple dependency without version" time="0.001">
+    </testcase>
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract a simple dependency with a specific version" time="0">
+    </testcase>
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract multiple dependencies with and without versions" time="0.002">
+      <failure>Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 4
++ Received  + 0
+
+@@ -7,14 +7,10 @@
+      },
+      &quot;@reduxjs/toolkit&quot;: Object {
+        &quot;reason&quot;: &quot;Identified from prompt: @reduxjs/toolkit@~1.9&quot;,
+        &quot;version&quot;: &quot;~1.9&quot;,
+      },
+-     &quot;axios&quot;: Object {
+-       &quot;reason&quot;: &quot;Identified from prompt: axios&quot;,
+-       &quot;version&quot;: &quot;latest&quot;,
+-     },
+      &quot;react&quot;: Object {
+        &quot;reason&quot;: &quot;Identified from prompt: react@^18.2.0&quot;,
+        &quot;version&quot;: &quot;^18.2.0&quot;,
+      },
+    },
+    at Object.&lt;anonymous&gt; (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/tests/generation/promptAnalyzer.test.ts:79:54)
+    at Promise.then.completed (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-runner/build/runTest.js:444:34)</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
