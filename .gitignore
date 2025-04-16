@@ -9,3 +9,8 @@ test-cline-integration.sh
 
 cline
 modelcontextprotocol
+llms.txt
+questions.txt 
+STATE_MANAGEMENT.md
+.roomodes
+.machine-id 

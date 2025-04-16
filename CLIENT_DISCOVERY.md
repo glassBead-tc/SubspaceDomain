@@ -1,188 +1,146 @@
-# MCP Bridge Server Client Discovery and Registration
+# MCP Bridge Server Client Discovery and Connection
 
-This document describes the client discovery and registration protocol used in the MCP Bridge Server.
+This document describes how clients discover and connect to the MCP Bridge Server.
 
 ## Overview
 
-The MCP Bridge Server needs to discover and register clients to facilitate communication between them. This process involves:
+The MCP Bridge Server facilitates communication between different MCP clients. The process involves:
 
-1. **Client Discovery**: Finding MCP clients on the system
-2. **Client Registration**: Registering clients with the bridge server
-3. **Client Handshake**: Establishing a connection and exchanging capabilities
-4. **Client Reconnection**: Handling client disconnections and reconnections
+1.  **Client Discovery**: Locating the bridge server's communication endpoint.
+2.  **Connection and Initialization**: Establishing a connection and performing the standard MCP handshake.
+3.  **Client Reconnection**: Handling client disconnections and reconnections.
 
 ## Client Discovery
 
-The MCP Bridge Server supports several methods for discovering clients:
+Clients need to know how to connect to the bridge server. The primary methods are:
 
 ### 1. Socket-Based Discovery
 
-Clients can connect to the bridge server's Unix socket at `/tmp/mcp-bridge.sock`. This is the primary discovery mechanism for macOS-native clients.
+Clients connect directly to the bridge server's Unix socket. The default path is typically `/tmp/mcp-bridge.sock`, but this can be configured. This is the main mechanism for clients running on the same machine as the server.
 
 ### 2. Configuration-Based Discovery
 
-The bridge server can be configured with information about known clients, including:
-- Client ID
-- Client type (claude, cline, etc.)
-- Transport mechanism (stdio, unix-socket)
-- Socket path (for unix-socket transport)
+Client connection details can be provided through configuration:
 
-### 3. Process-Based Discovery
+*   **Environment Variables**: Setting variables like `MCP_BRIDGE_SOCKET`.
+*   **Configuration Files**: Specifying the socket path in a client-specific configuration file.
+*   **Command-Line Arguments**: Passing the socket path via arguments like `--mcp-bridge-socket`.
 
-The bridge server can scan for running processes that match known MCP client patterns. This is useful for discovering clients that are already running but not connected to the bridge.
+*(See Client Configuration section for examples)*
 
-## Client Registration
+## Connection and Initialization
 
-Once a client is discovered, it needs to register with the bridge server:
+Once a client knows the server's socket path, it connects and initiates the standard MCP handshake:
 
-### Registration Process
+### Connection Process
 
-1. **Connection**: Client connects to the bridge server's Unix socket
-2. **Initialization**: Client sends an `initialize` request with its capabilities
-3. **Registration**: Bridge server registers the client and assigns a unique ID
-4. **Confirmation**: Bridge server sends a registration confirmation
-5. **Ready**: Client sends an `initialized` notification to indicate it's ready
+1.  **Connect**: The client establishes a connection to the bridge server's Unix socket.
+2.  **Initialize Request**: Immediately upon connection, the client sends an `initialize` request message as defined in the standard MCP protocol (`src/protocols/mcpSchema.ts`). This message includes the client's capabilities and identification information.
+3.  **Initialize Response**: The bridge server processes the request, registers the client internally, and sends back an `initialize` response containing the server's capabilities and confirmation.
+4.  **Ready Notification**: The client sends an `initialized` notification to signal it's ready for operations.
+5.  **Connection Established**: The MCP connection is now fully established.
 
-### Registration Message Format
+### Example `initialize` Request (Client -> Server)
 
 ```json
 {
   "jsonrpc": "2.0",
   "method": "initialize",
   "params": {
-    "capabilities": {
-      "supportedMethods": ["tools/call", "tools/discover_client"],
-      "supportedTransports": ["unix-socket"],
-      "maxConcurrentTasks": 5,
-      "targetType": "claude",
-      "features": {
-        "autoStart": true,
-        "reconnect": true,
-        "healthCheck": true
-      }
-    },
+    "processId": 12345, // Optional: Client's process ID
     "clientInfo": {
-      "id": "client-123",
-      "type": "claude",
-      "version": "1.0.0"
+      "name": "ExampleClient",
+      "version": "1.2.0",
+      "protocols": ["mcp/1.0"] // Indicate MCP protocol support
+    },
+    "capabilities": {
+      // Client-specific capabilities advertised to the server
+      "exampleCapability": true
     }
   },
   "id": 1
 }
 ```
 
-## Client Handshake
-
-After registration, the client and server perform a handshake to establish the connection:
-
-### Handshake Process
-
-1. **Capability Exchange**: Server sends its capabilities to the client
-2. **Feature Negotiation**: Client and server negotiate features
-3. **Connection Confirmation**: Server confirms the connection is established
-
-### Handshake Message Format
+### Example `initialize` Response (Server -> Client)
 
 ```json
 {
   "jsonrpc": "2.0",
   "result": {
-    "capabilities": {
-      "supportedMethods": ["tools/call", "tools/discover_client"],
-      "supportedTransports": ["stdio", "unix-socket"],
-      "features": {
-        "autoStart": true,
-        "reconnect": true,
-        "healthCheck": true
-      }
-    },
     "serverInfo": {
       "name": "mcp-bridge-server",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "protocols": ["mcp/1.0"] // Confirm MCP protocol support
+    },
+    "capabilities": {
+      // Server-specific capabilities advertised to the client
+      "supportsMessageRouting": true
     }
   },
-  "id": 1
+  "id": 1 // Corresponds to the request ID
 }
 ```
 
+### Liveness Checks
+
+After initialization, clients and the server can use the standard MCP `ping` / `pong` messages to check if the connection is still active.
+
 ## Client Reconnection
 
-The bridge server supports client reconnection to handle temporary disconnections:
+The bridge server supports client reconnection:
 
 ### Reconnection Process
 
-1. **Disconnection Detection**: Server detects when a client disconnects
-2. **Reconnection Attempt**: Server attempts to reconnect to the client
-3. **State Restoration**: If reconnection is successful, server restores client state
-4. **Handshake**: Client and server perform a handshake again
+1.  **Disconnection Detection**: Server detects when a client disconnects (e.g., socket closes, `ping` fails).
+2.  **Reconnection Attempt**: If configured, the server may attempt to re-establish the connection based on known client details (if available via configuration). Clients are typically responsible for initiating reconnection attempts if the initial connection fails or drops.
+3.  **State Restoration**: Upon successful reconnection, the `initialize` handshake is performed again. The server might restore some previous session state if applicable.
 
 ### Reconnection Strategies
 
-1. **Immediate Reconnection**: Try to reconnect immediately after disconnection
-2. **Exponential Backoff**: Increase delay between reconnection attempts
-3. **Limited Attempts**: Give up after a configurable number of attempts
+Clients should implement reconnection logic, potentially using:
 
-## Client Configuration
+1.  **Immediate Reconnection**: Try to reconnect immediately.
+2.  **Exponential Backoff**: Increase delay between reconnection attempts.
+3.  **Limited Attempts**: Stop trying after a certain number of failures.
 
-Clients can be configured to connect to the bridge server in several ways:
+## Client Configuration Examples
+
+Clients can be configured to find the bridge server socket:
 
 ### 1. Environment Variables
 
-```
-MCP_BRIDGE_SOCKET=/tmp/mcp-bridge.sock
-MCP_CLIENT_ID=claude-1
-MCP_CLIENT_TYPE=claude
+```bash
+export MCP_BRIDGE_SOCKET=/path/to/mcp-bridge.sock
+export MCP_CLIENT_ID=unique-client-id # Optional: If needed by client logic
 ```
 
-### 2. Configuration Files
+### 2. Configuration Files (Example JSON)
 
 ```json
 {
-  "bridge": {
-    "socketPath": "/tmp/mcp-bridge.sock",
+  "mcpBridge": {
+    "socketPath": "/path/to/mcp-bridge.sock",
     "autoConnect": true,
-    "reconnect": true
+    "reconnect": {
+      "enabled": true,
+      "maxAttempts": 5,
+      "initialDelayMs": 1000
+    }
   },
   "client": {
-    "id": "claude-1",
-    "type": "claude"
+    "id": "unique-client-id" // Optional
   }
 }
 ```
 
 ### 3. Command-Line Arguments
 
-```
---mcp-bridge-socket=/tmp/mcp-bridge.sock
---mcp-client-id=claude-1
---mcp-client-type=claude
+```bash
+my-mcp-client --mcp-bridge-socket=/path/to/mcp-bridge.sock --mcp-client-id=unique-client-id
 ```
 
-## Implementation Details
+## Implementation Notes
 
-### Bridge Server Side
-
-The bridge server implements client discovery and registration through:
-
-1. **DiscoveryManager**: Handles client discovery
-2. **RegistrationManager**: Handles client registration
-3. **ConnectionManager**: Manages client connections
-4. **ReconnectionManager**: Handles client reconnection
-
-### Client Side
-
-Clients need to implement:
-
-1. **Bridge Discovery**: Find the bridge server
-2. **Registration**: Register with the bridge server
-3. **Handshake**: Perform capability exchange
-4. **Reconnection**: Handle disconnections and reconnect
-
-## Future Enhancements
-
-Planned enhancements to client discovery and registration:
-
-1. **Automatic Client Configuration**: Automatically configure clients to connect to the bridge
-2. **Client Health Monitoring**: Monitor client health and restart if necessary
-3. **Multi-Bridge Support**: Allow clients to connect to multiple bridge servers
-4. **Secure Registration**: Add authentication and encryption to the registration process
+*   **Server**: Manages incoming connections on the Unix socket, handles the `initialize` handshake, and maintains a registry of connected clients (`ConnectionManager`).
+*   **Client**: Needs logic to locate the socket path (via configuration), connect, perform the `initialize` handshake, and handle potential reconnections.

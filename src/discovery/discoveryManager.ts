@@ -1,12 +1,8 @@
 import { EventEmitter } from 'events';
 import { promises as fs } from 'fs';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import { ClientInfo, ConnectionState } from '../types.js';
 import { Logger } from '../utils/logger.js';
 import { MacOSDirectoryManager } from '../platform/macos/directoryManager.js';
-
-const execAsync = promisify(exec);
 
 /**
  * Discovery events
@@ -23,7 +19,6 @@ export enum DiscoveryEvent {
  */
 export enum DiscoveryMethod {
   SOCKET = 'socket',
-  PROCESS = 'process',
   CONFIG = 'config'
 }
 
@@ -43,10 +38,6 @@ export interface DiscoveryOptions {
   socketPath?: string;
   scanInterval?: number;
   autoScan?: boolean;
-  processPatterns?: {
-    claude?: string[];
-    cline?: string[];
-  };
 }
 
 /**
@@ -71,16 +62,6 @@ export class DiscoveryManager extends EventEmitter {
       socketPath: options.socketPath || this.directoryManager.getSocketPath(),
       scanInterval: options.scanInterval || 60000, // 1 minute
       autoScan: options.autoScan !== false,
-      processPatterns: {
-        claude: options.processPatterns?.claude || [
-          'Claude.app',
-          'claude-desktop'
-        ],
-        cline: options.processPatterns?.cline || [
-          'cline',
-          'cline-desktop'
-        ]
-      }
     };
 
     this.logger = new Logger({ prefix: 'DiscoveryManager' });
@@ -153,24 +134,21 @@ export class DiscoveryManager extends EventEmitter {
     this.logger.info('Starting client scan');
 
     try {
-      // Scan using all methods
-      const socketClients = await this.scanSocketClients();
-      const processClients = await this.scanProcessClients();
+      // Process scanning removed. Discovery relies on client registration.
+      // The scan method now just reports currently known clients.
+      const currentClients = Array.from(this.knownClients.values());
 
-      // Combine results
-      const allClients = [...socketClients, ...processClients];
-
-      // Update known clients
-      this.updateKnownClients(allClients);
+      // Future enhancement: Check for timed-out clients here.
+      // For now, just report what's known.
 
       const result: DiscoveryResult = {
-        clients: allClients,
-        method: DiscoveryMethod.SOCKET, // Primary method
+        clients: currentClients,
+        method: DiscoveryMethod.SOCKET, // Primary method is via socket registration
         timestamp: new Date()
       };
 
       this.emit(DiscoveryEvent.SCAN_COMPLETE, result);
-      this.logger.info(`Scan complete, found ${allClients.length} clients`);
+      this.logger.info(`Scan complete, reported ${currentClients.length} known clients`);
 
       return result;
     } catch (error) {
@@ -195,128 +173,26 @@ export class DiscoveryManager extends EventEmitter {
     return [];
   }
 
-  /**
-   * Scan for process-based clients
-   */
-  private async scanProcessClients(): Promise<ClientInfo[]> {
-    this.logger.debug('Scanning for process clients');
+  // NOTE: Process scanning methods (scanProcessClients, findProcessesByPattern) removed.
+  // Discovery relies on clients connecting to the known socket and registering.
 
-    const clients: ClientInfo[] = [];
-
-    try {
-      // Scan for Claude processes
-      const claudeProcesses = await this.findProcessesByPattern(this.options.processPatterns.claude);
-      for (const process of claudeProcesses) {
-        const clientId = `claude-${process.pid}`;
-        clients.push({
-          id: clientId,
-          type: 'claude',
-          transport: 'unix-socket',
-          connected: false,
-          lastSeen: new Date(),
-          state: ConnectionState.DISCOVERED,
-          processId: process.pid
-        });
-      }
-
-      // Scan for Cline processes
-      const clineProcesses = await this.findProcessesByPattern(this.options.processPatterns.cline);
-      for (const process of clineProcesses) {
-        const clientId = `cline-${process.pid}`;
-        clients.push({
-          id: clientId,
-          type: 'cline',
-          transport: 'unix-socket',
-          connected: false,
-          lastSeen: new Date(),
-          state: ConnectionState.DISCOVERED,
-          processId: process.pid
-        });
-      }
-
-      this.logger.debug(`Found ${clients.length} process clients`);
-      return clients;
-    } catch (error) {
-      this.logger.error('Error scanning for process clients:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Find processes by pattern
-   */
-  private async findProcessesByPattern(patterns: string[] = []): Promise<{ pid: number; command: string }[]> {
-    if (!patterns || patterns.length === 0) {
-      return [];
-    }
-
-    try {
-      // Build grep pattern
-      const grepPattern = patterns.map(p => `'${p}'`).join('|');
-
-      // Run ps command
-      const { stdout } = await execAsync(`ps -eo pid,command | grep -E ${grepPattern} | grep -v grep`);
-
-      // Parse output
-      return stdout.trim().split('\n')
-        .filter(line => line.trim())
-        .map(line => {
-          const [pidStr, ...commandParts] = line.trim().split(/\s+/);
-          const command = commandParts.join(' ');
-          return {
-            pid: parseInt(pidStr, 10),
-            command
-          };
-        });
-    } catch (error) {
-      // If grep returns non-zero exit code (no matches), return empty array
-      if (error instanceof Error && 'code' in error && error.code === 1) {
-        return [];
-      }
-
-      throw error;
-    }
-  }
-
-  /**
-   * Update known clients
-   */
+  // NOTE: This method is less relevant now as discovery isn't scan-based.
+  // Client additions are handled by registerClient.
+  // Client loss should be handled by connection manager or timeouts.
+  // Keeping a simplified version for potential future use or complete removal later.
+  /*
   private updateKnownClients(clients: ClientInfo[]): void {
-    const currentIds = new Set(clients.map(c => c.id));
-    const knownIds = new Set(this.knownClients.keys());
-
-    // Find new clients
-    for (const client of clients) {
-      if (!this.knownClients.has(client.id)) {
-        this.logger.info(`New client found: ${client.type} (${client.id})`);
-        this.knownClients.set(client.id, client);
-        this.emit(DiscoveryEvent.CLIENT_FOUND, client);
-      } else {
-        // Update existing client
-        const existing = this.knownClients.get(client.id)!;
-        this.knownClients.set(client.id, {
-          ...existing,
-          lastSeen: new Date()
-        });
-      }
-    }
-
-    // Find lost clients
-    for (const id of knownIds) {
-      if (!currentIds.has(id)) {
-        const client = this.knownClients.get(id)!;
-        this.logger.info(`Client lost: ${client.type} (${client.id})`);
-        this.knownClients.delete(id);
-        this.emit(DiscoveryEvent.CLIENT_LOST, client);
-      }
-    }
+    // ... (Original logic removed) ...
   }
+  */
 
   /**
    * Register a client
    */
   public registerClient(client: ClientInfo): void {
     this.logger.info(`Registering client: ${client.type} (${client.id})`);
+
+    const isNew = !this.knownClients.has(client.id);
 
     // Update or add client
     this.knownClients.set(client.id, {
@@ -325,7 +201,7 @@ export class DiscoveryManager extends EventEmitter {
     });
 
     // Emit event if it's a new client
-    if (!this.knownClients.has(client.id)) {
+    if (isNew) {
       this.emit(DiscoveryEvent.CLIENT_FOUND, client);
     }
   }
