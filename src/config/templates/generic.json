@@ -1,0 +1,29 @@
+{
+  "bridge": {
+    "socketPath": "/tmp/mcp-bridge.sock",
+    "autoConnect": true,
+    "reconnect": true
+  },
+  "client": {
+    "id": "generic-client",
+    "type": "other"
+  },
+  "capabilities": {
+    "supportedMethods": [
+      "tools/call"
+    ],
+    "supportedTransports": [
+      "unix-socket"
+    ],
+    "maxConcurrentTasks": 3,
+    "features": {
+      "autoStart": false,
+      "reconnect": true,
+      "healthCheck": false
+    }
+  },
+  "logging": {
+    "level": "info",
+    "file": "~/Library/Logs/mcp-bridge/generic-client.log"
+  }
+}

@@ -1,6 +1,11 @@
 import { Server as McpServer } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { UnixSocketServerTransport } from './transport/unixSocketTransport.js';
+import { McpTransportAdapter } from './transport/mcpTransportAdapter.js';
+import { DiscoveryManager } from './discovery/discoveryManager.js';
+import { ConnectionManager } from './discovery/connectionManager.js';
+import { RegistrationProtocol } from './discovery/registrationProtocol.js';
+import { Logger } from './utils/logger.js';
 import {
   CallToolRequestSchema,
   ErrorCode,
@@ -29,6 +34,10 @@ export class BridgeServer {
   private stateManager: StateManager;
   private router: Router;
   private config: BridgeServerConfig;
+  private discoveryManager: DiscoveryManager;
+  private connectionManager: ConnectionManager;
+  private registrationProtocol: RegistrationProtocol;
+  private logger: Logger;
 
   constructor(
     config: BridgeServerConfig,
@@ -36,8 +45,18 @@ export class BridgeServer {
     stateManagerConfig: StateManagerConfig
   ) {
     this.config = config;
+    this.logger = new Logger({ prefix: 'BridgeServer' });
     this.stateManager = new StateManager(stateManagerConfig);
     this.router = new Router(routerConfig, this.stateManager);
+
+    // Initialize discovery and connection components
+    this.discoveryManager = new DiscoveryManager({
+      socketPath: config.transport?.socketPath,
+      autoScan: true
+    });
+
+    this.connectionManager = new ConnectionManager(this.discoveryManager);
+    this.registrationProtocol = new RegistrationProtocol();
 
     // Initialize MCP server
     this.server = new McpServer(
@@ -157,12 +176,40 @@ export class BridgeServer {
   private async handleClientDiscovery(params: any): Promise<ClientDiscoveryResult> {
     const { clientType, autoStart = false, timeout = this.config.clientStartupTimeoutMs || 30000 } = params;
 
+    this.logger.info(`Discovering client of type: ${clientType}, autoStart: ${autoStart}`);
+
     // Check if client is already connected
-    const connectedClients = this.stateManager.getConnectedClientsByType(clientType);
+    const connectedClients = this.connectionManager.getConnectedClientsByType(clientType);
     if (connectedClients.length > 0) {
+      this.logger.info(`Found connected client: ${connectedClients[0].id}`);
       return {
         found: true,
         client: connectedClients[0]
+      };
+    }
+
+    // Try to find a discovered but not connected client
+    const discoveredClients = this.discoveryManager.getClientsByType(clientType);
+    if (discoveredClients.length > 0) {
+      this.logger.info(`Found discovered client: ${discoveredClients[0].id}`);
+
+      // Attempt to connect to the client
+      this.connectionManager.handleRegistration(JSON.stringify(
+        this.registrationProtocol.createRegisterMessage(
+          clientType,
+          {
+            supportedMethods: ['tools/call'],
+            supportedTransports: ['unix-socket'],
+            targetType: clientType
+          },
+          'unix-socket',
+          discoveredClients[0].id
+        )
+      ));
+
+      return {
+        found: true,
+        client: discoveredClients[0]
       };
     }
 
@@ -171,6 +218,7 @@ export class BridgeServer {
       try {
         const startupOptions = this.getClientStartupOptions(clientType);
         if (!startupOptions) {
+          this.logger.warn(`No startup configuration available for client type: ${clientType}`);
           return {
             found: false,
             error: `No startup configuration available for client type: ${clientType}`
@@ -178,6 +226,7 @@ export class BridgeServer {
         }
 
         const client = await this.startClient(clientType, startupOptions, timeout);
+        this.logger.info(`Started client: ${client.id}`);
         return {
           found: true,
           client,
@@ -186,6 +235,7 @@ export class BridgeServer {
         };
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        this.logger.error(`Failed to start client: ${errorMessage}`);
         return {
           found: false,
           error: `Failed to start client: ${errorMessage}`,
@@ -195,6 +245,7 @@ export class BridgeServer {
       }
     }
 
+    this.logger.warn(`No ${clientType} clients available`);
     return {
       found: false,
       error: `No ${clientType} clients available`
@@ -401,14 +452,31 @@ export class BridgeServer {
     // Determine which transport to use based on config
     if (this.config.transport?.type === 'unix-socket') {
       const socketPath = this.config.transport.socketPath || '/tmp/mcp-bridge.sock';
-      const transport = new UnixSocketServerTransport(socketPath);
+      const unixTransport = new UnixSocketServerTransport(socketPath);
+
+      // Create adapter to make it compatible with MCP SDK
+      const transport = new McpTransportAdapter(unixTransport);
+
+      // Set up error handling
+      transport.onerror = (error) => {
+        this.logger.error('Transport error:', error.message);
+      };
+
+      transport.onclose = () => {
+        this.logger.info('Transport closed');
+      };
+
+      // Start the transport first
+      await transport.start();
+
+      // Then connect the server to the transport
       await this.server.connect(transport);
-      console.error(`MCP Bridge Server running on Unix socket at ${socketPath}`);
+      this.logger.info(`MCP Bridge Server running on Unix socket at ${socketPath}`);
     } else {
       // Default to stdio transport
       const transport = new StdioServerTransport();
       await this.server.connect(transport);
-      console.error('MCP Bridge Server running on stdio');
+      this.logger.info('MCP Bridge Server running on stdio');
     }
   }
 
@@ -416,8 +484,20 @@ export class BridgeServer {
    * Stop the server and cleanup resources
    */
   public async stop(): Promise<void> {
+    this.logger.info('Stopping server...');
+
+    // Disconnect all clients
+    this.connectionManager.disconnectAllClients('Server shutting down');
+
+    // Dispose managers
+    this.connectionManager.dispose();
+    this.discoveryManager.dispose();
+
+    // Close server and dispose state manager
     await this.server.close();
     this.stateManager.dispose();
+
+    this.logger.info('Server stopped');
   }
 
   /**
@@ -425,14 +505,35 @@ export class BridgeServer {
    * Loads persisted state and prepares for startup
    */
   public async initialize(): Promise<void> {
+    this.logger.info('Initializing server...');
+
     // Initialize state manager
     await this.stateManager.initialize();
+
+    // Initialize discovery manager
+    await this.discoveryManager.initialize();
+
+    // Initialize connection manager
+    this.connectionManager.initialize();
+
+    // Set up connection event handlers
+    this.connectionManager.on('client_connected', (client) => {
+      this.logger.info(`Client connected: ${client.type} (${client.id})`);
+      this.stateManager.registerClient(client);
+    });
+
+    this.connectionManager.on('client_disconnected', (client) => {
+      this.logger.info(`Client disconnected: ${client.type} (${client.id})`);
+      this.stateManager.disconnectClient(client.id);
+    });
 
     // Attempt to recover client connections
     const recoveredClients = await this.stateManager.recoverConnections();
     if (recoveredClients.length > 0) {
-      console.log(`Recovered ${recoveredClients.length} client connections`);
+      this.logger.info(`Recovered ${recoveredClients.length} client connections`);
     }
+
+    this.logger.info('Server initialization complete');
   }
 
   /**
@@ -440,9 +541,29 @@ export class BridgeServer {
    */
   public async registerClient(client: ClientInfo): Promise<void> {
     await this.stateManager.registerClient(client);
-    console.error(`Registered client: ${client.type} (${client.id})`);
+    this.logger.info(`Registered client: ${client.type} (${client.id})`);
+
+    // Register with discovery and connection managers
+    this.discoveryManager.registerClient(client);
+
+    // Handle registration message
+    if (client.connected) {
+      this.connectionManager.handleRegistration(JSON.stringify(
+        this.registrationProtocol.createRegisterMessage(
+          client.type,
+          client.capabilities || {
+            supportedMethods: ['tools/call'],
+            supportedTransports: [client.transport]
+          },
+          client.transport,
+          client.id,
+          client.socketPath
+        )
+      ));
+    }
+
     const clients = this.stateManager.getConnectedClientsByType(client.type);
-    console.error(`Active ${client.type} clients: ${clients.length}`);
+    this.logger.info(`Active ${client.type} clients: ${clients.length}`);
   }
 
   /**

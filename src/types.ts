@@ -3,6 +3,7 @@
  */
 
 export enum ConnectionState {
+  DISCOVERED = 'discovered',
   DISCOVERING = 'discovering',
   CONNECTING = 'connecting',
   HANDSHAKING = 'handshaking',

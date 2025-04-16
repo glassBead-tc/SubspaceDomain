@@ -22,10 +22,10 @@ function parseCommandLineArgs() {
     'status': { type: 'boolean' },
     'exec-path': { type: 'string' },
     'help': { type: 'boolean' }
-  };
-  
+  } as const;
+
   const { values } = parseArgs({ options, strict: false });
-  
+
   return {
     install: values.install as boolean | undefined,
     uninstall: values.uninstall as boolean | undefined,
@@ -65,47 +65,47 @@ async function main() {
   try {
     // Parse command line arguments
     const args = parseCommandLineArgs();
-    
+
     // Show help if requested or no command provided
     if (args.help || (!args.install && !args.uninstall && !args.start && !args.stop && !args.status)) {
       printHelp();
       process.exit(0);
     }
-    
+
     // Initialize directory manager
     const directoryManager = new MacOSDirectoryManager();
     await directoryManager.initialize();
-    
+
     // Initialize service manager
     const serviceManager = new MacOSServiceManager();
     await serviceManager.initialize();
-    
+
     // Handle commands
     if (args.install) {
       const execPath = args.execPath || join(dirname(dirname(__dirname)), 'build', 'index.js');
       await serviceManager.install(execPath);
       console.log(`Service installed successfully with executable: ${execPath}`);
     }
-    
+
     if (args.uninstall) {
       await serviceManager.uninstall();
       console.log('Service uninstalled successfully');
     }
-    
+
     if (args.start) {
       await serviceManager.start();
       console.log('Service started successfully');
     }
-    
+
     if (args.stop) {
       await serviceManager.stop();
       console.log('Service stopped successfully');
     }
-    
+
     if (args.status) {
       const status = await serviceManager.getStatus();
       console.log(`Service status: ${status}`);
-      
+
       if (status === ServiceStatus.RUNNING) {
         console.log('Service is running');
       } else if (status === ServiceStatus.STOPPED) {

@@ -1,6 +1,21 @@
 import { Socket } from 'net';
-import { Transport } from '@modelcontextprotocol/sdk/server/index.js';
 import { EventEmitter } from 'events';
+
+/**
+ * Transport interface
+ * Compatible with MCP SDK Transport interface
+ */
+export interface Transport {
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+  send(message: string): Promise<void>;
+  onMessage(handler: (message: string) => void): void;
+  onClose(handler: () => void): void;
+
+  // These methods are required by the MCP SDK
+  start?: () => Promise<void>;
+  close?: () => Promise<void>;
+}
 import { SocketServer, SocketServerEvent } from './socket/socketServer.js';
 import { SocketMessage } from './socket/socketMessage.js';
 import { SocketClient, SocketClientEvent } from './socket/socketClient.js';
@@ -112,6 +127,20 @@ export class UnixSocketServerTransport implements Transport {
    */
   public onClose(handler: () => void): void {
     this.eventEmitter.on('close', handler);
+  }
+
+  /**
+   * Start the transport (required by MCP SDK)
+   */
+  public async start(): Promise<void> {
+    return this.connect();
+  }
+
+  /**
+   * Close the transport (required by MCP SDK)
+   */
+  public async close(): Promise<void> {
+    return this.disconnect();
   }
 
   /**
@@ -288,5 +317,19 @@ export class UnixSocketClientTransport implements Transport {
    */
   public onClose(handler: () => void): void {
     this.eventEmitter.on('close', handler);
+  }
+
+  /**
+   * Start the transport (required by MCP SDK)
+   */
+  public async start(): Promise<void> {
+    return this.connect();
+  }
+
+  /**
+   * Close the transport (required by MCP SDK)
+   */
+  public async close(): Promise<void> {
+    return this.disconnect();
   }
 }

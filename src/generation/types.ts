@@ -1,4 +1,7 @@
-import { ServerCapabilities } from '@modelcontextprotocol/sdk/server.js';
+import { ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
+
+// Use the ServerCapabilities as MCPServerCapabilities for backward compatibility
+export type MCPServerCapabilities = ServerCapabilities;
 
 export interface ServerTemplate {
   version: string;
@@ -82,7 +85,7 @@ export interface ResourcePrediction {
 
 export interface GenerationContext {
   prompt: string;
-  capabilities: MCPServerCapabilities;
+  capabilities: ServerCapabilities;
   template: ServerTemplate;
   dependencies: ResolvedDependencies;
   resources: ResourcePrediction;

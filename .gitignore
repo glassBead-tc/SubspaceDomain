@@ -1,6 +1,11 @@
 .roomode
 .env
 node_modules/
-build/
 
+CLINE_INTEGRATION.md
+cline_mcp_settings.json
+check-logs.sh
+test-cline-integration.sh
+
+cline
 modelcontextprotocol

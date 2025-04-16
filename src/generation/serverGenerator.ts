@@ -1,9 +1,9 @@
-import { ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
-import { 
-  GeneratedServer, 
-  ServerTemplate, 
+import { MCPServerCapabilities } from './types.js';
+import {
+  GeneratedServer,
+  ServerTemplate,
   TemplateOptions,
-  ResourcePrediction 
+  ResourcePrediction
 } from './types.js';
 import TemplateManager from './templateManager.js';
 import DependencyResolver from './dependencyResolver.js';
@@ -28,12 +28,12 @@ export class ServerGenerator {
   ): Promise<GeneratedServer> {
     // Analyze prompt
     const analysis = await this.promptAnalyzer.analyzePrompt(prompt);
-    
+
     // Validate capabilities
     const validationResult = await this.promptAnalyzer.validateCapabilities(
       analysis.capabilities
     );
-    
+
     if (!validationResult.valid) {
       throw new Error(
         `Invalid capabilities: ${validationResult.errors.map(e => e.message).join(', ')}`
@@ -44,14 +44,14 @@ export class ServerGenerator {
     const dependencies = await this.dependencyResolver.analyzeDependencies(
       analysis.capabilities
     );
-    
+
     // Check for security issues
     const securityReport = await this.dependencyResolver.validateSecurity(dependencies);
     if (!securityReport.safe) {
       const issues = securityReport.vulnerabilities
         .filter(v => v.severity === 'high' || v.severity === 'critical')
         .map(v => `${v.package}: ${v.description}`);
-      
+
       if (issues.length > 0) {
         throw new Error(`Security issues found: ${issues.join(', ')}`);
       }
@@ -96,7 +96,7 @@ export class ServerGenerator {
 
   private async generateServerCode(
     template: ServerTemplate,
-    capabilities: ServerCapabilities,
+    capabilities: MCPServerCapabilities,
     serverName: string,
     options: TemplateOptions
   ): Promise<string> {
@@ -114,7 +114,7 @@ export class ServerGenerator {
     return this.templateManager.generateServerCode(template, options, replacements);
   }
 
-  private async generateHandlers(capabilities: ServerCapabilities): Promise<string> {
+  private async generateHandlers(capabilities: MCPServerCapabilities): Promise<string> {
     const handlers: string[] = [];
 
     // Generate tool handlers
@@ -223,7 +223,7 @@ export class ServerGenerator {
   }
 
   private async predictResourceNeeds(
-    capabilities: ServerCapabilities
+    capabilities: MCPServerCapabilities
   ): Promise<ResourcePrediction> {
     // Basic resource prediction based on capabilities
     const prediction: ResourcePrediction = {

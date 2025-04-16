@@ -1,0 +1,38 @@
+Before I start creating the CDP implementation, I'd like to ask you a few questions to better understand your requirements:
+
+1. What is the primary purpose of the Client Discovery Protocol (CDP) within your MCP bridge server? Is it meant to standardize how clients discover and connect to each other?
+2. What specific capabilities or features should CDP include? For example:
+ Client registration/deregistration  
+ Client capability discovery
+4.  Connection establishment
+ Health monitoring
+Reconnection handling
+Are there any specific requirements for the protocol format? Should it follow JSON-RPC 2.0 like the main MCP protocol?
+How should CDP integrate with the existing MCP implementation? Should it be a separate module or an extension of the current protocol?
+Are there any specific security considerations for client discovery that should be addressed in the protocol?
+Do you have any preferences for the directory structure or naming conventions for the CDP implementation?
+This information will help me create a more tailored and effective implementation of the Client Discovery Protocol.
+
+Beta
+Drop images to attach as context
+(png, jpg, jpeg)
+
+
+
+---------
+
+
+1. Yes, and specifically how "Janus agents" can discover other agents with MCP clients through our server.
+
+2. I want these:
+
+Client registration/deregistration
+Connection establishment
+Health monitoring
+Reconnection handling
+
+3. I think it should also use JSON-RPC-2.0 as the wire format, but should also be as liberal as MCP with it if necessary.
+
+4. This I don't know yet, we'll look
+
+5. 

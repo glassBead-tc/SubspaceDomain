@@ -1,0 +1,31 @@
+{
+  "bridge": {
+    "socketPath": "/tmp/mcp-bridge.sock",
+    "autoConnect": true,
+    "reconnect": true
+  },
+  "client": {
+    "id": "claude-client",
+    "type": "claude"
+  },
+  "capabilities": {
+    "supportedMethods": [
+      "tools/call",
+      "tools/discover_client"
+    ],
+    "supportedTransports": [
+      "unix-socket"
+    ],
+    "maxConcurrentTasks": 5,
+    "targetType": "claude",
+    "features": {
+      "autoStart": true,
+      "reconnect": true,
+      "healthCheck": true
+    }
+  },
+  "logging": {
+    "level": "info",
+    "file": "~/Library/Logs/mcp-bridge/claude-client.log"
+  }
+}

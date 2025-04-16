@@ -1,0 +1,32 @@
+{
+  "bridge": {
+    "socketPath": "/tmp/mcp-bridge.sock",
+    "autoConnect": true,
+    "reconnect": true
+  },
+  "client": {
+    "id": "cline-client",
+    "type": "cline"
+  },
+  "capabilities": {
+    "supportedMethods": [
+      "tools/call",
+      "tools/discover_client",
+      "tools/execute_command"
+    ],
+    "supportedTransports": [
+      "unix-socket"
+    ],
+    "maxConcurrentTasks": 10,
+    "targetType": "cline",
+    "features": {
+      "autoStart": true,
+      "reconnect": true,
+      "healthCheck": true
+    }
+  },
+  "logging": {
+    "level": "info",
+    "file": "~/Library/Logs/mcp-bridge/cline-client.log"
+  }
+}

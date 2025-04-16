@@ -16,7 +16,7 @@ function parseCommandLineArgs() {
     'service': { type: 'string' },
     'exec-path': { type: 'string' },
     'help': { type: 'boolean' }
-  };
+  } as const;
 
   const { values } = parseArgs({ options, strict: false });
 

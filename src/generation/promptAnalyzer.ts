@@ -170,6 +170,7 @@ const COMMON_WORDS_FILTER = new Set([
 ]);
 
 export class PromptAnalyzer {
+
   private readonly capabilityPatterns: CapabilityPattern[] = [
     {
       keywords: ['http', 'request', 'fetch', 'api'],
@@ -525,3 +526,5 @@ export class PromptAnalyzer {
     return /^[a-z][a-zA-Z0-9]*$/.test(name);
   }
 }
+
+export default PromptAnalyzer;

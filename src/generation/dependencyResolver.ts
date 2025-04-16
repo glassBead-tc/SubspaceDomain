@@ -1,5 +1,4 @@
-import { DependencyMap, SecurityReport, ResolvedDependencies } from './types.js';
-import { MCPServerCapabilities } from '@modelcontextprotocol/sdk';
+import { DependencyMap, SecurityReport, ResolvedDependencies, MCPServerCapabilities } from './types.js';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 
@@ -113,7 +112,7 @@ export class DependencyResolver {
     for (const [pkg, versions] of allDeps.entries()) {
       if (versions.size > 1) {
         const resolvedVersion = await this.resolveVersion(pkg, Array.from(versions));
-        
+
         // Update the resolved version in dependencies
         if (pkg in resolved.required) {
           resolved.required[pkg] = {
@@ -121,7 +120,7 @@ export class DependencyResolver {
             version: resolvedVersion
           };
         }
-        
+
         if (pkg in resolved.optional) {
           resolved.optional[pkg] = {
             ...resolved.optional[pkg],
@@ -288,8 +287,8 @@ export class DependencyResolver {
       .map(v => parseInt(v.split('-')[0], 10));
 
     if (required.startsWith('^')) {
-      return actualMajor === reqMajor && 
-             (actualMajor > reqMajor || 
+      return actualMajor === reqMajor &&
+             (actualMajor > reqMajor ||
               actualMinor > reqMinor ||
               (actualMinor === reqMinor && actualPatch >= reqPatch));
     }

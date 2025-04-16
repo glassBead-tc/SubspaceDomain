@@ -15,7 +15,7 @@ export class ConfigManager {
     stateManager: StateManagerConfig;
   };
   private directoryManager?: MacOSDirectoryManager;
-  
+
   constructor(configPath?: string) {
     // If on macOS and no config path provided, use macOS default
     if (!configPath && process.platform === 'darwin') {
@@ -24,7 +24,7 @@ export class ConfigManager {
     } else {
       this.configPath = configPath || join(process.cwd(), 'config.json');
     }
-    
+
     // Default configuration
     this.config = {
       server: {
@@ -59,7 +59,7 @@ export class ConfigManager {
       }
     };
   }
-  
+
   /**
    * Initialize configuration
    * Loads config from file or creates default
@@ -68,19 +68,19 @@ export class ConfigManager {
     try {
       // Create directory if it doesn't exist
       await fs.mkdir(dirname(this.configPath), { recursive: true });
-      
+
       // Try to load existing config
       try {
         const configData = await fs.readFile(this.configPath, 'utf-8');
         const loadedConfig = JSON.parse(configData);
-        
+
         // Merge with defaults
         this.config = {
           server: { ...this.config.server, ...loadedConfig.server },
           router: { ...this.config.router, ...loadedConfig.router },
           stateManager: { ...this.config.stateManager, ...loadedConfig.stateManager }
         };
-        
+
         console.log(`Configuration loaded from ${this.configPath}`);
       } catch (error) {
         // If file doesn't exist, create it with defaults
@@ -92,7 +92,7 @@ export class ConfigManager {
           throw error;
         }
       }
-      
+
       // If on macOS, set up platform-specific config
       if (process.platform === 'darwin' && this.directoryManager) {
         // Set up macOS-specific paths if not already configured
@@ -109,15 +109,17 @@ export class ConfigManager {
             }
           };
         }
-        
+
         // Set up persistence storage dir
-        if (!this.config.stateManager.persistence?.storageDir) {
+        if (!this.config.stateManager.persistence) {
           this.config.stateManager.persistence = {
-            ...this.config.stateManager.persistence,
+            enabled: true,
             storageDir: this.directoryManager.getClientStoragePath()
           };
+        } else if (!this.config.stateManager.persistence.storageDir) {
+          this.config.stateManager.persistence.storageDir = this.directoryManager.getClientStoragePath();
         }
-        
+
         // Set up unix socket transport if not configured
         if (!this.config.server.transport) {
           this.config.server.transport = {
@@ -125,7 +127,7 @@ export class ConfigManager {
             socketPath: this.directoryManager.getSocketPath()
           };
         }
-        
+
         // Save updated config
         await this.save();
       }
@@ -134,7 +136,7 @@ export class ConfigManager {
       throw error;
     }
   }
-  
+
   /**
    * Save configuration to file
    */
@@ -150,35 +152,35 @@ export class ConfigManager {
       throw error;
     }
   }
-  
+
   /**
    * Get server configuration
    */
   public getServerConfig(): BridgeServerConfig {
     return this.config.server;
   }
-  
+
   /**
    * Get router configuration
    */
   public getRouterConfig(): RouterConfig {
     return this.config.router;
   }
-  
+
   /**
    * Get state manager configuration
    */
   public getStateManagerConfig(): StateManagerConfig {
     return this.config.stateManager;
   }
-  
+
   /**
    * Get macOS configuration
    */
   public getMacOSConfig(): MacOSConfig | undefined {
     return this.config.server.platform?.macOS;
   }
-  
+
   /**
    * Update server configuration
    */
@@ -186,7 +188,7 @@ export class ConfigManager {
     this.config.server = { ...this.config.server, ...config };
     await this.save();
   }
-  
+
   /**
    * Update router configuration
    */
@@ -194,7 +196,7 @@ export class ConfigManager {
     this.config.router = { ...this.config.router, ...config };
     await this.save();
   }
-  
+
   /**
    * Update state manager configuration
    */
@@ -202,7 +204,7 @@ export class ConfigManager {
     this.config.stateManager = { ...this.config.stateManager, ...config };
     await this.save();
   }
-  
+
   /**
    * Update macOS configuration
    */

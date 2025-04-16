@@ -24,8 +24,8 @@ This project is under active development. Current status:
 - [x] Service lifecycle management
 - [x] Client persistence implementation
 - [x] Recovery mechanisms for service restarts
-- [ ] Client discovery and registration protocol
-- [ ] Configuration templates for Claude and Cline
+- [x] Client discovery and registration protocol
+- [x] Configuration templates for Claude and Cline
 
 ## Architecture
 
