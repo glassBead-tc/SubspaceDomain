@@ -1,5 +1,6 @@
 import { Server as McpServer } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { UnixSocketServerTransport } from './transport/unixSocketTransport.js';
 import {
   CallToolRequestSchema,
   ErrorCode,
@@ -67,7 +68,7 @@ export class BridgeServer {
                 properties: {
                   method: { type: 'string' },
                   arguments: { type: 'object' },
-                  targetType: { 
+                  targetType: {
                     type: 'string',
                     enum: ['claude', 'cline']
                   }
@@ -136,7 +137,7 @@ export class BridgeServer {
             properties: {
               method: { type: 'string' },
               arguments: { type: 'object' },
-              targetType: { 
+              targetType: {
                 type: 'string',
                 enum: ['claude', 'cline']
               }
@@ -337,7 +338,7 @@ export class BridgeServer {
         client.state = ConnectionState.HANDSHAKING;
         client.capabilities = message.payload.capabilities;
         this.stateManager.updateClient(client);
-        
+
         // Send connection request to target client
         const targetClient = this.findTargetClient(message);
         if (targetClient) {
@@ -397,9 +398,18 @@ export class BridgeServer {
    * Start the server with the specified transport
    */
   public async start(): Promise<void> {
-    const transport = new StdioServerTransport();
-    await this.server.connect(transport);
-    console.error('MCP Bridge Server running on stdio');
+    // Determine which transport to use based on config
+    if (this.config.transport?.type === 'unix-socket') {
+      const socketPath = this.config.transport.socketPath || '/tmp/mcp-bridge.sock';
+      const transport = new UnixSocketServerTransport(socketPath);
+      await this.server.connect(transport);
+      console.error(`MCP Bridge Server running on Unix socket at ${socketPath}`);
+    } else {
+      // Default to stdio transport
+      const transport = new StdioServerTransport();
+      await this.server.connect(transport);
+      console.error('MCP Bridge Server running on stdio');
+    }
   }
 
   /**
@@ -411,10 +421,25 @@ export class BridgeServer {
   }
 
   /**
+   * Initialize the server
+   * Loads persisted state and prepares for startup
+   */
+  public async initialize(): Promise<void> {
+    // Initialize state manager
+    await this.stateManager.initialize();
+
+    // Attempt to recover client connections
+    const recoveredClients = await this.stateManager.recoverConnections();
+    if (recoveredClients.length > 0) {
+      console.log(`Recovered ${recoveredClients.length} client connections`);
+    }
+  }
+
+  /**
    * Register a new client with the bridge server
    */
-  public registerClient(client: ClientInfo): void {
-    this.stateManager.registerClient(client);
+  public async registerClient(client: ClientInfo): Promise<void> {
+    await this.stateManager.registerClient(client);
     console.error(`Registered client: ${client.type} (${client.id})`);
     const clients = this.stateManager.getConnectedClientsByType(client.type);
     console.error(`Active ${client.type} clients: ${clients.length}`);

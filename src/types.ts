@@ -13,7 +13,7 @@ export enum ConnectionState {
 
 export interface ClientCapabilities {
   supportedMethods: string[];
-  supportedTransports: ('stdio' | 'http')[];
+  supportedTransports: ('stdio' | 'http' | 'unix-socket')[];
   maxConcurrentTasks?: number;
   targetType?: 'claude' | 'cline';
   features?: {
@@ -26,12 +26,13 @@ export interface ClientCapabilities {
 export interface ClientInfo {
   id: string;
   type: 'claude' | 'cline' | 'other';
-  transport: 'stdio' | 'http';
+  transport: 'stdio' | 'http' | 'unix-socket';
   connected: boolean;
   lastSeen: Date;
   state: ConnectionState;
   capabilities?: ClientCapabilities;
   processId?: number;  // For locally started clients
+  socketPath?: string; // For unix socket transport
 }
 
 export interface TaskState {
@@ -71,6 +72,13 @@ export interface BridgeServerConfig {
   clientStartupTimeoutMs?: number;
   handshakeTimeoutMs?: number;
   reconnectIntervalMs?: number;
+  transport?: {
+    type: 'stdio' | 'unix-socket';
+    socketPath?: string;
+  };
+  platform?: {
+    macOS?: MacOSConfig;
+  };
 }
 
 export interface RouterConfig {
@@ -88,6 +96,10 @@ export interface StateManagerConfig {
   taskExpirationMs: number;
   clientTimeoutMs?: number;
   maxReconnectAttempts?: number;
+  persistence?: {
+    enabled: boolean;
+    storageDir?: string;
+  };
 }
 
 export interface ClientStartupOptions {
@@ -104,4 +116,26 @@ export interface ClientDiscoveryResult {
   error?: string;
   startupAttempted?: boolean;
   startupSuccessful?: boolean;
+}
+
+/**
+ * macOS-specific configuration
+ */
+export interface MacOSConfig {
+  // Directory paths
+  baseDir?: string;        // Default: ~/Library/Application Support/mcp-bridge
+  cacheDir?: string;       // Default: ~/Library/Caches/mcp-bridge
+  logsDir?: string;        // Default: ~/Library/Logs/mcp-bridge
+
+  // Socket configuration
+  socketPath?: string;     // Default: /tmp/mcp-bridge.sock
+
+  // LaunchAgent configuration
+  launchAgentName?: string;  // Default: com.mcp-bridge.plist
+  launchAgentDir?: string;   // Default: ~/Library/LaunchAgents
+
+  // Service configuration
+  autoStart?: boolean;       // Default: true
+  keepAlive?: boolean;       // Default: true
+  runAtLoad?: boolean;       // Default: true
 }

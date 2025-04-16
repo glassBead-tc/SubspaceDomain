@@ -1,39 +1,146 @@
 #!/usr/bin/env node
 
 import { BridgeServer } from './server.js';
+import { configManager } from './config/configManager.js';
+import { MacOSDirectoryManager } from './platform/macos/directoryManager.js';
+import { MacOSServiceManager, ServiceStatus } from './platform/macos/serviceManager.js';
+import { parseArgs } from 'node:util';
 
-// Default configurations
-const bridgeServerConfig = {
-  maxTaskAttempts: 3,
-  taskTimeoutMs: 30000, // 30 seconds
-  logLevel: 'info' as const
-};
+/**
+ * Parse command line arguments
+ */
+function parseCommandLineArgs() {
+  const options = {
+    'transport': { type: 'string' },
+    'socket-path': { type: 'string' },
+    'service': { type: 'string' },
+    'exec-path': { type: 'string' },
+    'help': { type: 'boolean' }
+  };
 
-const routerConfig = {
-  defaultTargetType: 'claude' as const,
-  routingRules: {
-    // Example routing rules
-    'tools/optimize_code': {
-      targetType: 'claude' as const,
-      priority: 1
-    },
-    'tools/execute_command': {
-      targetType: 'cline' as const,
-      priority: 1
-    }
+  const { values } = parseArgs({ options, strict: false });
+
+  return {
+    transport: values.transport as 'stdio' | 'unix-socket' | undefined,
+    socketPath: values['socket-path'] as string | undefined,
+    service: values.service as 'install' | 'uninstall' | 'start' | 'stop' | 'status' | undefined,
+    execPath: values['exec-path'] as string | undefined,
+    help: values.help as boolean | undefined
+  };
+}
+
+/**
+ * Print help message
+ */
+function printHelp() {
+  console.log(`
+MCP Bridge Server
+
+Usage:
+  mcp-bridge-server [options]
+
+Options:
+  --transport <type>     Transport type (stdio, unix-socket)
+  --socket-path <path>   Unix socket path (default: /tmp/mcp-bridge.sock)
+  --service <command>    Service management (install, uninstall, start, stop, status)
+  --exec-path <path>     Path to executable (required for service install)
+  --help                 Show this help message
+`);
+}
+
+/**
+ * Handle service management commands
+ */
+async function handleServiceCommand(command: string, execPath?: string): Promise<void> {
+  // Initialize macOS service manager
+  const serviceManager = new MacOSServiceManager();
+  await serviceManager.initialize();
+
+  switch (command) {
+    case 'install':
+      if (!execPath) {
+        console.error('Error: --exec-path is required for service installation');
+        process.exit(1);
+      }
+      await serviceManager.install(execPath);
+      console.log('Service installed successfully');
+      break;
+
+    case 'uninstall':
+      await serviceManager.uninstall();
+      console.log('Service uninstalled successfully');
+      break;
+
+    case 'start':
+      await serviceManager.start();
+      console.log('Service started successfully');
+      break;
+
+    case 'stop':
+      await serviceManager.stop();
+      console.log('Service stopped successfully');
+      break;
+
+    case 'status':
+      const status = await serviceManager.getStatus();
+      console.log(`Service status: ${status}`);
+      if (status === ServiceStatus.NOT_INSTALLED) {
+        console.log('Service is not installed. Use --service install to install it.');
+      }
+      break;
+
+    default:
+      console.error(`Unknown service command: ${command}`);
+      process.exit(1);
   }
-};
 
-const stateManagerConfig = {
-  cleanupIntervalMs: 60000, // 1 minute
-  taskExpirationMs: 300000 // 5 minutes
-};
+  process.exit(0);
+}
 
 async function main() {
   try {
-    // Create and start the bridge server
+    // Parse command line arguments
+    const args = parseCommandLineArgs();
+
+    // Show help if requested
+    if (args.help) {
+      printHelp();
+      process.exit(0);
+    }
+
+    // Handle service management commands
+    if (args.service) {
+      await handleServiceCommand(args.service, args.execPath);
+      return; // handleServiceCommand will exit the process
+    }
+
+    // Initialize configuration manager
+    await configManager.initialize();
+
+    // Override config with command line arguments
+    if (args.transport) {
+      await configManager.updateServerConfig({
+        transport: {
+          type: args.transport,
+          socketPath: args.socketPath
+        }
+      });
+    }
+
+    // Initialize macOS directory structure if on macOS
+    if (process.platform === 'darwin') {
+      const directoryManager = new MacOSDirectoryManager();
+      await directoryManager.initialize();
+    }
+
+    // Get configurations
+    const serverConfig = configManager.getServerConfig();
+    const routerConfig = configManager.getRouterConfig();
+    const stateManagerConfig = configManager.getStateManagerConfig();
+
+    // Create bridge server
     const server = new BridgeServer(
-      bridgeServerConfig,
+      serverConfig,
       routerConfig,
       stateManagerConfig
     );
@@ -51,8 +158,13 @@ async function main() {
       process.exit(0);
     });
 
+    // Initialize state manager
+    await server.initialize();
+
     // Start the server
     await server.start();
+
+    console.log('MCP Bridge Server started successfully');
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);

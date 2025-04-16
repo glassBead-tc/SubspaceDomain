@@ -1,4 +1,4 @@
-import { MCPServerCapabilities } from '@modelcontextprotocol/sdk';
+import { ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
 import { 
   GeneratedServer, 
   ServerTemplate, 
@@ -7,7 +7,7 @@ import {
 } from './types.js';
 import TemplateManager from './templateManager.js';
 import DependencyResolver from './dependencyResolver.js';
-import PromptAnalyzer from './promptAnalyzer.js';
+import { PromptAnalyzer } from './promptAnalyzer.js';
 import { createHash } from 'crypto';
 
 export class ServerGenerator {
@@ -96,7 +96,7 @@ export class ServerGenerator {
 
   private async generateServerCode(
     template: ServerTemplate,
-    capabilities: MCPServerCapabilities,
+    capabilities: ServerCapabilities,
     serverName: string,
     options: TemplateOptions
   ): Promise<string> {
@@ -114,7 +114,7 @@ export class ServerGenerator {
     return this.templateManager.generateServerCode(template, options, replacements);
   }
 
-  private async generateHandlers(capabilities: MCPServerCapabilities): Promise<string> {
+  private async generateHandlers(capabilities: ServerCapabilities): Promise<string> {
     const handlers: string[] = [];
 
     // Generate tool handlers
@@ -223,7 +223,7 @@ export class ServerGenerator {
   }
 
   private async predictResourceNeeds(
-    capabilities: MCPServerCapabilities
+    capabilities: ServerCapabilities
   ): Promise<ResourcePrediction> {
     // Basic resource prediction based on capabilities
     const prediction: ResourcePrediction = {

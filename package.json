@@ -10,7 +10,13 @@
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "start": "node build/index.js",
-    "dev": "tsc -w"
+    "start:socket": "node build/index.js --transport unix-socket",
+    "dev": "tsc -w",
+    "service:install": "node build/cli/service.js --install",
+    "service:uninstall": "node build/cli/service.js --uninstall",
+    "service:start": "node build/cli/service.js --start",
+    "service:stop": "node build/cli/service.js --stop",
+    "service:status": "node build/cli/service.js --status"
   },
   "keywords": [
     "mcp",
@@ -22,6 +28,10 @@
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.9.0"
+  },
+  "bin": {
+    "mcp-bridge-server": "build/index.js",
+    "mcp-service": "build/cli/service.js"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
