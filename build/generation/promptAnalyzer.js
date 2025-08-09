@@ -440,4 +440,5 @@ export class PromptAnalyzer {
         return /^[a-z][a-zA-Z0-9]*$/.test(name);
     }
 }
+export default PromptAnalyzer;
 //# sourceMappingURL=promptAnalyzer.js.map

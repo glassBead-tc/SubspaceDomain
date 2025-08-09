@@ -1,5 +1,4 @@
-import { DependencyMap, SecurityReport, ResolvedDependencies } from './types.js';
-import { MCPServerCapabilities } from '@modelcontextprotocol/sdk';
+import { DependencyMap, SecurityReport, ResolvedDependencies, MCPServerCapabilities } from './types.js';
 export declare class DependencyResolver {
     private readonly knownSecurePackages;
     private readonly packageVersionCache;

@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 import { ClientInfo } from '../types.js';
 import { DiscoveryManager } from './discoveryManager.js';
+import { JSONRPCMessage } from '../protocols/mcpSchema.js';
 /**
  * Connection events
  */
@@ -14,8 +15,6 @@ export declare enum ConnectionEvent {
  * Connection manager options
  */
 export interface ConnectionManagerOptions {
-    heartbeatInterval?: number;
-    heartbeatTimeout?: number;
     reconnectInterval?: number;
     maxReconnectAttempts?: number;
 }
@@ -26,20 +25,15 @@ export interface ConnectionManagerOptions {
 export declare class ConnectionManager extends EventEmitter {
     private logger;
     private discoveryManager;
-    private protocol;
     private options;
     private connectedClients;
-    private heartbeatIntervals;
     private reconnectAttempts;
+    private pendingInitialize;
     constructor(discoveryManager: DiscoveryManager, options?: ConnectionManagerOptions);
     /**
      * Initialize connection manager
      */
     initialize(): void;
-    /**
-     * Handle client found event
-     */
-    private handleClientFound;
     /**
      * Handle client lost event
      */
@@ -47,23 +41,38 @@ export declare class ConnectionManager extends EventEmitter {
     /**
      * Attempt to connect to a client
      */
+    /**
+     * Attempt to establish an MCP connection with a client (server).
+     * This should be called *after* a transport layer connection (e.g., socket) is established.
+     */
     private attemptConnection;
     /**
-     * Handle client registration
+     * Handles incoming JSON-RPC messages from a connected client (server).
+     * This should be called by the transport layer when a message is received.
      */
-    handleRegistration(message: string): ClientInfo | null;
+    handleIncomingMessage(clientId: string, message: JSONRPCMessage): void;
     /**
-     * Start heartbeat for a client
+     * Handles successful JSON-RPC responses.
      */
-    private startHeartbeat;
+    private handleResponse;
     /**
-     * Stop heartbeat for a client
+     * Handles JSON-RPC error responses.
      */
-    private stopHeartbeat;
+    private handleErrorResponse;
     /**
-     * Send heartbeat to a client
+    * Processes the InitializeResult received from a client (server).
+    */
+    private handleInitializeResult;
+    /**
+     * Handles an incoming PingRequest (wrapped in JSONRPCRequest) from a server.
      */
-    private sendHeartbeat;
+    private handlePingRequest;
+    /**
+     * Placeholder for sending a message via the transport layer.
+     * Needs to be implemented based on the actual transport mechanism.
+     */
+    private sendMessage;
+    handleRegistration(message: string): void;
     /**
      * Handle client disconnection
      */

@@ -14,7 +14,6 @@ export declare enum DiscoveryEvent {
  */
 export declare enum DiscoveryMethod {
     SOCKET = "socket",
-    PROCESS = "process",
     CONFIG = "config"
 }
 /**
@@ -32,10 +31,6 @@ export interface DiscoveryOptions {
     socketPath?: string;
     scanInterval?: number;
     autoScan?: boolean;
-    processPatterns?: {
-        claude?: string[];
-        cline?: string[];
-    };
 }
 /**
  * Discovery manager
@@ -69,18 +64,6 @@ export declare class DiscoveryManager extends EventEmitter {
      * Scan for socket-based clients
      */
     private scanSocketClients;
-    /**
-     * Scan for process-based clients
-     */
-    private scanProcessClients;
-    /**
-     * Find processes by pattern
-     */
-    private findProcessesByPattern;
-    /**
-     * Update known clients
-     */
-    private updateKnownClients;
     /**
      * Register a client
      */

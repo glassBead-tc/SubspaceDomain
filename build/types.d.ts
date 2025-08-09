@@ -1,3 +1,4 @@
+import { Implementation, ServerCapabilities as MCPServerCapabilities } from './protocols/mcpSchema.js';
 /**
  * Types for MCP Bridge Server
  */
@@ -28,9 +29,11 @@ export interface ClientInfo {
     connected: boolean;
     lastSeen: Date;
     state: ConnectionState;
-    capabilities?: ClientCapabilities;
+    registrationCapabilities?: ClientCapabilities;
     processId?: number;
     socketPath?: string;
+    serverInfo?: Implementation;
+    serverCapabilities?: MCPServerCapabilities;
 }
 export interface TaskState {
     id: string;
