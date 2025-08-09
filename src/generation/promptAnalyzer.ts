@@ -206,7 +206,7 @@ export class PromptAnalyzer {
     const capabilities = await this.extractCapabilities(prompt);
     const authRequirements = this.analyzeAuthRequirements(prompt);
     const dataFlowPatterns = this.analyzeDataFlow(prompt);
-    const externalDependencies = this.extractDependencies(prompt); // Now returns DependencyMap
+    const externalDependencies: DependencyMap = this.extractDependencies(prompt); // Now returns DependencyMap
 
     return {
       capabilities,
@@ -445,11 +445,21 @@ export class PromptAnalyzer {
       return false;
     }
 
+    // Accept simple lowercase package tokens (like 'axios') in prose
+    if (!packageName.includes('/') && /^[a-z0-9_.-]+$/.test(packageName)) {
+      return true;
+    }
+
     // Check context: Look for keywords like 'install', 'import', 'require', 'package' nearby
     const precedingText = context.substring(Math.max(0, index - 25), index).toLowerCase();
 
     // Higher confidence if preceded by install/import keywords
     if (/(npm i|npm install|yarn add|pnpm add|import|require|dependency|package)\s+$/.test(precedingText)) {
+      return true;
+    }
+
+    // Also accept if preceded by common conjunctions in prose
+    if (/(and\s+|also\s+|plus\s+)$/.test(precedingText)) {
       return true;
     }
 
@@ -467,6 +477,12 @@ export class PromptAnalyzer {
     // Consider '.' or '/' as negative context only if not preceded by strong keywords
     if (/[.\/]/.test(charAfter) && !/(npm i|npm install|yarn add|pnpm add|import|require|dependency|package)\s+$/.test(precedingText)) {
          return false;
+    }
+
+    // If unscoped simple name and followed by punctuation or end, accept (handles "plus axios.")
+    const after = context.slice(index + packageName.length);
+    if (!packageName.includes('/') && (/^[\s,.;)]|$/.test(after))) {
+      return true;
     }
 
     // Default to true if basic checks passed and no strong negative indicators found

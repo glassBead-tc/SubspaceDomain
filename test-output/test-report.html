@@ -261,201 +261,7 @@ header {
   font-size: 1rem;
   padding: 0 0.5rem;
 }
-</style></head><body><main class="jesthtml-content"><header><h1 id="title">MCP Bridge Server Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2025-08-09 08:16:31</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (12)</div><div class="summary-passed ">1 passed</div><div class="summary-failed ">11 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (143)</div><div class="summary-passed ">52 passed</div><div class="summary-failed ">91 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/encryption.test.ts</div><div class="suite-time">3.773s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; initialization</div><div class="test-title">should initialize with valid config</div><div class="test-status">passed</div><div class="test-duration">0.027s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; initialization</div><div class="test-title">should fail with invalid config</div><div class="test-status">failed</div><div class="test-duration">0.028s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
-
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid encryption algorithm"
-
-      255 |
-      256 |     if (!Object.values(EncryptionAlgorithm).includes(config.algorithm)) {
-    &gt; 257 |       throw new SecurityError(
-          |             ^
-      258 |         SecurityErrorType.INVALID_CONFIG,
-      259 |         'Invalid encryption algorithm'
-      260 |       );
-
-      at EncryptionManager.validateConfig (src/security/encryption.ts:257:13)
-      at new validateConfig (src/security/encryption.ts:33:10)
-      at tests/security/encryption.test.ts:53:20
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:67:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:67:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; initialization</div><div class="test-title">should fail with invalid key derivation</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
-
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid PBKDF2 iterations"
-
-      295 |       case KeyDerivationFunction.PBKDF2:
-      296 |         if (!kdf.iterations || kdf.iterations &lt; 10000) {
-    &gt; 297 |           throw new SecurityError(
-          |                 ^
-      298 |             SecurityErrorType.INVALID_CONFIG,
-      299 |             'Invalid PBKDF2 iterations'
-      300 |           );
-
-      at EncryptionManager.validateConfig (src/security/encryption.ts:297:17)
-      at new validateConfig (src/security/encryption.ts:33:10)
-      at tests/security/encryption.test.ts:71:20
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:85:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:85:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should encrypt and decrypt data</div><div class="test-status">passed</div><div class="test-duration">0.019s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail when encryption is disabled</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "ENCRYPTION_FAILED"
-Received message:   "Encryption is disabled"
-
-      61 |     try {
-      62 |       if (!this.config.enabled) {
-    &gt; 63 |         throw new SecurityError(
-         |               ^
-      64 |           SecurityErrorType.ENCRYPTION_FAILED,
-      65 |           'Encryption is disabled'
-      66 |         );
-
-      at EncryptionManager.encrypt (src/security/encryption.ts:63:15)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:115:28)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:117:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail with algorithm mismatch</div><div class="test-status">failed</div><div class="test-duration">0.011s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "DECRYPTION_FAILED"
-Received message:   "Algorithm mismatch"
-
-      142 |       // Validate algorithm
-      143 |       if (encrypted.algorithm !== this.config.algorithm) {
-    &gt; 144 |         throw new SecurityError(
-          |               ^
-      145 |           SecurityErrorType.DECRYPTION_FAILED,
-      146 |           'Algorithm mismatch'
-      147 |         );
-
-      at EncryptionManager.decrypt (src/security/encryption.ts:144:15)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:125:38)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:127:10)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail with tampered data</div><div class="test-status">failed</div><div class="test-duration">0.016s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "DECRYPTION_FAILED"
-Received message:   "Failed to decrypt data"
-
-      179 |         throw error;
-      180 |       }
-    &gt; 181 |       throw new SecurityError(
-          |             ^
-      182 |         SecurityErrorType.DECRYPTION_FAILED,
-      183 |         'Failed to decrypt data',
-      184 |         error
-
-      at EncryptionManager.decrypt (src/security/encryption.ts:181:13)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:135:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:137:10)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail with tampered tag</div><div class="test-status">failed</div><div class="test-duration">0.017s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "DECRYPTION_FAILED"
-Received message:   "Failed to decrypt data"
-
-      179 |         throw error;
-      180 |       }
-    &gt; 181 |       throw new SecurityError(
-          |             ^
-      182 |         SecurityErrorType.DECRYPTION_FAILED,
-      183 |         'Failed to decrypt data',
-      184 |         error
-
-      at EncryptionManager.decrypt (src/security/encryption.ts:181:13)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:147:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:149:10)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; key derivation</div><div class="test-title">should work with PBKDF2</div><div class="test-status">passed</div><div class="test-duration">0.021s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; key derivation</div><div class="test-title">should work with scrypt</div><div class="test-status">passed</div><div class="test-duration">0.219s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; key derivation</div><div class="test-title">should fail with Argon2</div><div class="test-status">failed</div><div class="test-duration">0.006s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
-
-Expected substring: "INVALID_CONFIG"
-Received message:   "Argon2 is not yet supported"
-
-      324 |
-      325 |       case KeyDerivationFunction.ARGON2:
-    &gt; 326 |         throw new SecurityError(
-          |               ^
-      327 |           SecurityErrorType.INVALID_CONFIG,
-      328 |           'Argon2 is not yet supported'
-      329 |         );
-
-      at EncryptionManager.validateConfig (src/security/encryption.ts:326:15)
-      at new validateConfig (src/security/encryption.ts:33:10)
-      at tests/security/encryption.test.ts:207:20
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:221:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:221:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; algorithms</div><div class="test-title">should work with AES-256-GCM</div><div class="test-status">passed</div><div class="test-duration">0.02s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; algorithms</div><div class="test-title">should work with AES-256-CBC</div><div class="test-status">passed</div><div class="test-duration">0.031s</div></div></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/registration/manager.test.ts</div><div class="suite-time">3.97s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; initialization</div><div class="test-title">should initialize with default config</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; initialization</div><div class="test-title">should not initialize when disabled</div><div class="test-status">failed</div><div class="test-duration">0.029s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "REQUEST_INVALID"
-Received message:   "Registration is disabled"
-
-      142 |   public async handleRequest(request: RegistrationRequest): Promise&lt;RegistrationResponse&gt; {
-      143 |     if (!this.enabled) {
-    &gt; 144 |       throw new RegistrationError(
-          |             ^
-      145 |         RegistrationErrorType.REQUEST_INVALID,
-      146 |         'Registration is disabled'
-      147 |       );
-
-      at RegistrationManager.handleRequest (src/registration/manager.ts:144:13)
-      at Object.&lt;anonymous&gt; (tests/registration/manager.test.ts:50:45)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:52:10)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should handle registration request</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should approve registration</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should reject registration</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should track registration history</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should auto-approve matching client type</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should not auto-approve non-matching client type</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should check required capabilities</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should check excluded capabilities</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; hooks</div><div class="test-title">should call request hook</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: jest is not defined
+</style></head><body><main class="jesthtml-content"><header><h1 id="title">MCP Bridge Server Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2025-08-09 10:27:06</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (12)</div><div class="summary-passed ">2 passed</div><div class="summary-failed ">10 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (143)</div><div class="summary-passed ">105 passed</div><div class="summary-failed ">38 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/registration/manager.test.ts</div><div class="suite-time">1.969s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; initialization</div><div class="test-title">should initialize with default config</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; initialization</div><div class="test-title">should not initialize when disabled</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should handle registration request</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should approve registration</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should reject registration</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; registration workflow</div><div class="test-title">should track registration history</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should auto-approve matching client type</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should not auto-approve non-matching client type</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should check required capabilities</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; auto-approval</div><div class="test-title">should check excluded capabilities</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; hooks</div><div class="test-title">should call request hook</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: jest is not defined
     at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:168:25)
     at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
@@ -471,7 +277,7 @@ Received message:   "Registration is disabled"
     at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
     at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
     at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; hooks</div><div class="test-title">should call approve hook</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: jest is not defined
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; hooks</div><div class="test-title">should call approve hook</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: jest is not defined
     at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:183:25)
     at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
@@ -503,133 +309,157 @@ Received message:   "Registration is disabled"
     at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
     at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
     at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; expiration</div><div class="test-title">should set expiration times</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; expiration</div><div class="test-title">should expire records</div><div class="test-status">passed</div><div class="test-duration">0.151s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; error handling</div><div class="test-title">should handle non-existent record</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "REQUEST_NOT_FOUND"
-Received message:   "Registration record not found"
-
-      228 |     const record = await this.storage.get(id);
-      229 |     if (!record) {
-    &gt; 230 |       throw new RegistrationError(
-          |             ^
-      231 |         RegistrationErrorType.REQUEST_NOT_FOUND,
-      232 |         'Registration record not found'
-      233 |       );
-
-      at RegistrationManager.getRecord (src/registration/manager.ts:230:13)
-      at Object.&lt;anonymous&gt; (tests/registration/manager.test.ts:270:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:272:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; error handling</div><div class="test-title">should handle hook errors</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow()
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; expiration</div><div class="test-title">should set expiration times</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; expiration</div><div class="test-title">should expire records</div><div class="test-status">passed</div><div class="test-duration">0.151s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; error handling</div><div class="test-title">should handle non-existent record</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RegistrationManager &gt; error handling</div><div class="test-title">should handle hook errors</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow()
 
 Received promise resolved instead of rejected
-Resolved to value: {"expiresAt": 2025-08-10T08:16:35.300Z, "registrationId": "6ecbce8e-bc3f-41c6-b6a5-8ba6497838a0", "state": "PENDING"}
+Resolved to value: {"expiresAt": 2025-08-10T10:27:08.329Z, "registrationId": "ee4c9c0a-f526-4d91-9789-ca63f2fb8e30", "state": "PENDING"}
     at expect (/workspace/node_modules/expect/build/index.js:113:15)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:286:13)</pre></div></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/identity/session.test.ts</div><div class="suite-time">3.996s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should create session</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should enforce session limit</div><div class="test-status">failed</div><div class="test-duration">0.012s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should fail with invalid user</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should fail with unauthorized machine</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should fail with invalid client</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSession</div><div class="test-title">should get active session</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSession</div><div class="test-title">should fail for expired session</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSession</div><div class="test-title">should fail for non-existent session</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSessionsByUser</div><div class="test-title">should get all user sessions</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSessionsByUser</div><div class="test-title">should filter expired sessions</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSessionsByUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; updateActivity</div><div class="test-title">should update session timestamps</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; updateActivity</div><div class="test-title">should fail for expired session</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; endSession</div><div class="test-title">should end session and update client</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; endSession</div><div class="test-title">should fail for non-existent session</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; cleanup</div><div class="test-title">should clean up expired sessions</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; validation</div><div class="test-title">should validate session ID format</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</pre></div></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/access.test.ts</div><div class="suite-time">0.333s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; initialization</div><div class="test-title">should initialize with valid config</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; initialization</div><div class="test-title">should fail with invalid rules</div><div class="test-status">failed</div><div class="test-duration">0.027s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:286:13)</pre></div></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/identity/session.test.ts</div><div class="suite-time">2.748s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should create session</div><div class="test-status">failed</div><div class="test-duration">0.016s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:73:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should enforce session limit</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:87:7)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should fail with invalid user</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should fail with unauthorized machine</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SessionManager &gt; createSession</div><div class="test-title">should fail with invalid client</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSession</div><div class="test-title">should get active session</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:117:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSession</div><div class="test-title">should fail for expired session</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:124:23)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSession</div><div class="test-title">should fail for non-existent session</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSessionsByUser</div><div class="test-title">should get all user sessions</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:143:21)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSessionsByUser</div><div class="test-title">should filter expired sessions</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:153:7)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SessionManager &gt; getSessionsByUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; updateActivity</div><div class="test-title">should update session timestamps</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:171:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; updateActivity</div><div class="test-title">should fail for expired session</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:179:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; endSession</div><div class="test-title">should end session and update client</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:192:23)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SessionManager &gt; endSession</div><div class="test-title">should fail for non-existent session</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; cleanup</div><div class="test-title">should clean up expired sessions</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:215:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">SessionManager &gt; validation</div><div class="test-title">should validate session ID format</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: SESSION_NOT_FOUND: Failed to get sessions
+    at SessionManager.getSessionsByUser (/workspace/src/identity/session.ts:213:13)
+    at SessionManager.createSession (/workspace/src/identity/session.ts:97:24)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:248:23)</pre></div></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/identity/user.test.ts</div><div class="suite-time">0.113s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; createUser</div><div class="test-title">should create user with machine ID</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; createUser</div><div class="test-title">should create user without machine ID</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; createUser</div><div class="test-title">should fail with invalid machine ID</div><div class="test-status">passed</div><div class="test-duration">0.011s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUser</div><div class="test-title">should get existing user</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUserByMachine</div><div class="test-title">should get user by machine ID</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: USER_NOT_FOUND: No user found for machine ID
+    at UserManager.getUserByMachine (/workspace/src/identity/user.ts:165:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:98:25)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUserByMachine</div><div class="test-title">should fail for unknown machine ID</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; updateUser</div><div class="test-title">should update user preferences</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; updateUser</div><div class="test-title">should add machine ID</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: USER_INVALID: Invalid user data
+    at UserManager.updateUser (/workspace/src/identity/user.ts:197:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:127:23)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; updateUser</div><div class="test-title">should fail with invalid updates</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; deleteUser</div><div class="test-title">should delete existing user</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; deleteUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; validation</div><div class="test-title">should validate user ID format</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; validation</div><div class="test-title">should validate machine IDs</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; validation</div><div class="test-title">should validate preferences</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/ratelimit.test.ts</div><div class="suite-time">2.918s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; initialization</div><div class="test-title">should initialize with valid config</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; initialization</div><div class="test-title">should fail with invalid storage type</div><div class="test-status">passed</div><div class="test-duration">0.018s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rate limiting</div><div class="test-title">should allow requests within limit</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
 
-Expected substring: "INVALID_CONFIG"
-Received message:   "Rules must be an array"
-
-      256 |   private validateRules(rules: AccessRule[]): void {
-      257 |     if (!Array.isArray(rules)) {
-    &gt; 258 |       throw new SecurityError(
-          |             ^
-      259 |         SecurityErrorType.INVALID_CONFIG,
-      260 |         'Rules must be an array'
-      261 |       );
-
-      at AccessControlManager.validateRules (src/security/access.ts:258:13)
-      at new validateRules (src/security/access.ts:25:10)
-      at tests/security/access.test.ts:27:20
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:30:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:30:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should use default level when no rules match</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match resource patterns</div><div class="test-status">failed</div><div class="test-duration">0.005s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: true
-Received: false
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:49:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match user identity</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match client identity</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match machine identity</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; time restrictions</div><div class="test-title">should allow access during work hours</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; time restrictions</div><div class="test-title">should deny access outside work hours</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:58:32)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rate limiting</div><div class="test-title">should block requests over limit</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: false
 Received: true
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:116:10)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:81:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rate limiting</div><div class="test-title">should reset after window</div><div class="test-status">failed</div><div class="test-duration">1.103s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:97:32)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rule matching</div><div class="test-title">should match resource patterns</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:132:32)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rule matching</div><div class="test-title">should match user identity</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:141:32)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rule matching</div><div class="test-title">should match client identity</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 5
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:157:32)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; multiple rules</div><div class="test-title">should use most restrictive limit</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; multiple rules</div><div class="test-title">should track limits independently</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:212:32)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; disabled state</div><div class="test-title">should allow all requests when disabled</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; disabled state</div><div class="test-title">should not track requests when disabled</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:271:32)</pre></div></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/registration/storage.test.ts</div><div class="suite-time">0.167s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; initialization</div><div class="test-title">should create storage directory</div><div class="test-status">failed</div><div class="test-duration">0.01s</div></div><div class="failureMessages"> <pre class="failureMsg">StorageError: File not found
+    at PersistentStorage.read (/workspace/src/storage/persistentStorage.ts:131:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:58:21)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should save and retrieve record</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should return null for non-existent record</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should list all records</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should delete record</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should handle deleting non-existent record</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; retention</div><div class="test-title">should enforce max records limit</div><div class="test-status">failed</div><div class="test-duration">0.008s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+  Array [
+-   "3",
+    "2",
++   "3",
+  ]
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:133:40)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">FileStorage &gt; retention</div><div class="test-title">should clean up old records</div><div class="test-status">passed</div><div class="test-duration">0.019s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; error handling</div><div class="test-title">should handle storage read errors</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow()
+
+Received promise resolved instead of rejected
+Resolved to value: []
+    at expect (/workspace/node_modules/expect/build/index.js:113:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:165:13)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; error handling</div><div class="test-title">should handle storage write errors</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: jest is not defined
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:172:7)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/identity/client.test.ts</div><div class="suite-time">0.276s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should create client with machine ID</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should create client without machine ID</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should increment instance number</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should fail with invalid user</div><div class="test-status">passed</div><div class="test-duration">0.026s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should fail with unauthorized machine</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClient</div><div class="test-title">should get existing client</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClient</div><div class="test-title">should fail for non-existent client</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClientsByUser</div><div class="test-title">should get all user clients</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClientsByUser</div><div class="test-title">should return empty array for user with no clients</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: CLIENT_NOT_FOUND: Failed to get clients
+    at ClientManager.getClientsByUser (/workspace/src/identity/client.ts:157:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:127:23)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClientsByUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; updateClient</div><div class="test-title">should update client sessions</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; updateClient</div><div class="test-title">should fail with invalid updates</div><div class="test-status">failed</div><div class="test-duration">0.008s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow()
+
+Received promise resolved instead of rejected
+Resolved to value: {"components": {"clientType": "invalid", "instance": 0, "machineId": "1c9655ae203d42939538661ee3b4dbb9", "userId": "daf70dce7d9a90ab"}, "created": 2025-08-09T10:27:09.485Z, "id": "claude-daf70dce-1c9655ae-c527919d-0", "lastSeen": 2025-08-09T10:27:09.487Z, "sessions": []}
+    at expect (/workspace/node_modules/expect/build/index.js:113:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:152:13)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; deleteClient</div><div class="test-title">should delete existing client</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; deleteClient</div><div class="test-title">should fail for non-existent client</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; validation</div><div class="test-title">should validate client ID format</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ClientManager &gt; validation</div><div class="test-title">should validate machine IDs</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; validation</div><div class="test-title">should validate client type</div><div class="test-status">failed</div><div class="test-duration">0.012s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow()
+
+Received promise resolved instead of rejected
+Resolved to value: {"components": {"clientType": "invalid", "instance": 0, "machineId": "1c9655ae203d42939538661ee3b4dbb9", "userId": "d4a278b6f3d61a46"}, "created": 2025-08-09T10:27:09.526Z, "id": "invalid-d4a278b6-1c9655ae-5195f79c-0", "lastSeen": 2025-08-09T10:27:09.526Z, "sessions": []}
+    at expect (/workspace/node_modules/expect/build/index.js:113:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:204:13)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div></div></details><details id="suite-7" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/access.test.ts</div><div class="suite-time">0.123s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; initialization</div><div class="test-title">should initialize with valid config</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; initialization</div><div class="test-title">should fail with invalid rules</div><div class="test-status">passed</div><div class="test-duration">0.016s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should use default level when no rules match</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match resource patterns</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">SecurityError: ACCESS_DENIED: Failed to check access
+    at AccessControlManager.checkAccess (/workspace/src/security/access.ts:108:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:48:28)
     at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
     at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
@@ -644,7 +474,7 @@ Received: true
     at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
     at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
     at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; time restrictions</div><div class="test-title">should deny access on weekends</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; IP restrictions</div><div class="test-title">should match CIDR range</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; IP restrictions</div><div class="test-title">should match wildcard pattern</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; IP restrictions</div><div class="test-title">should match exact IP</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; location restrictions</div><div class="test-title">should allow access from allowed locations</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; location restrictions</div><div class="test-title">should deny access from other locations</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; rule management</div><div class="test-title">should add valid rule</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match user identity</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match client identity</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; access control</div><div class="test-title">should match machine identity</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; time restrictions</div><div class="test-title">should allow access during work hours</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; time restrictions</div><div class="test-title">should deny access outside work hours</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; time restrictions</div><div class="test-title">should deny access on weekends</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; IP restrictions</div><div class="test-title">should match CIDR range</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; IP restrictions</div><div class="test-title">should match wildcard pattern</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; IP restrictions</div><div class="test-title">should match exact IP</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; location restrictions</div><div class="test-title">should allow access from allowed locations</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; location restrictions</div><div class="test-title">should deny access from other locations</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; rule management</div><div class="test-title">should add valid rule</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: true
 Received: false
@@ -663,41 +493,7 @@ Received: false
     at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
     at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
     at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; rule management</div><div class="test-title">should fail with invalid rule</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
-
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid access level"
-
-      271 |     // Validate level
-      272 |     if (!Object.values(AccessLevel).includes(rule.level)) {
-    &gt; 273 |       throw new SecurityError(
-          |             ^
-      274 |         SecurityErrorType.INVALID_CONFIG,
-      275 |         'Invalid access level'
-      276 |       );
-
-      at AccessControlManager.validateRule (src/security/access.ts:273:13)
-      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
-      at tests/security/access.test.ts:203:34
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:204:10)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:204:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; rule management</div><div class="test-title">should remove rule</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; rule management</div><div class="test-title">should fail with invalid rule</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; rule management</div><div class="test-title">should remove rule</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: true
 Received: false
@@ -716,26 +512,27 @@ Received: false
     at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
     at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
     at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; validation</div><div class="test-title">should validate time format</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; validation</div><div class="test-title">should validate time format</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; validation</div><div class="test-title">should validate IP format</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; validation</div><div class="test-title">should validate day numbers</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details><details id="suite-8" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/generation/promptAnalyzer.test.ts</div><div class="suite-time">0.088s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should return default dependency for null prompt</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should return default dependency for empty prompt</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should return default dependency for prompt with no dependencies</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should extract a simple dependency without version</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should extract a simple dependency with a specific version</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should extract multiple dependencies with and without versions</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toEqual(expected) // deep equality
 
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid time format for start time"
+- Expected  - 4
++ Received  + 0
 
-      303 |
-      304 |         if (time.start &amp;&amp; !time.start.match(/^\d{2}:\d{2}:\d{2}$/)) {
-    &gt; 305 |           throw new SecurityError(
-          |                 ^
-      306 |             SecurityErrorType.INVALID_CONFIG,
-      307 |             'Invalid time format for start time'
-      308 |           );
-
-      at AccessControlManager.validateRule (src/security/access.ts:305:17)
-      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
-      at tests/security/access.test.ts:225:34
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:233:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:233:11)
+@@ -7,14 +7,10 @@
+      },
+      "@reduxjs/toolkit": Object {
+        "reason": "Identified from prompt: @reduxjs/toolkit@~1.9",
+        "version": "~1.9",
+      },
+-     "axios": Object {
+-       "reason": "Identified from prompt: axios",
+-       "version": "latest",
+-     },
+      "react": Object {
+        "reason": "Identified from prompt: react@^18.2.0",
+        "version": "^18.2.0",
+      },
+    },
+    at Object.&lt;anonymous&gt; (/workspace/tests/generation/promptAnalyzer.test.ts:79:54)
     at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
     at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
@@ -744,245 +541,19 @@ Received message:   "Invalid time format for start time"
     at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
     at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
     at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
     at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
     at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
     at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
     at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
     at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; validation</div><div class="test-title">should validate IP format</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div></div></details><details id="suite-9" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/server.test.ts</div><div class="suite-time">0.073s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; StateManager</div><div class="test-title">should manage client connections</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; StateManager</div><div class="test-title">should track task state</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; Router</div><div class="test-title">should route messages based on rules</div><div class="test-status">passed</div><div class="test-duration">0.013s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; Router</div><div class="test-title">should handle missing target clients</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div></div></details><details id="suite-10" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/audit.test.ts</div><div class="suite-time">1.383s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; initialization</div><div class="test-title">should create log directory</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; initialization</div><div class="test-title">should not create directory when disabled</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; logging</div><div class="test-title">should write log entry</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; logging</div><div class="test-title">should not write when disabled</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; logging</div><div class="test-title">should include metadata</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; rotation</div><div class="test-title">should rotate log file on interval</div><div class="test-status">passed</div><div class="test-duration">1.102s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; rotation</div><div class="test-title">should rotate log file on size limit</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).not.toBe(expected) // Object.is equality
 
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid IP format"
+Expected: not "/tmp/mcp-test-QsfkC8/size-test/audit-2025-08-09T10-27-09-539Z.log"
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/audit.test.ts:190:30)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; cleanup</div><div class="test-title">should delete old log files</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; cleanup</div><div class="test-title">should keep recent log files</div><div class="test-status">failed</div><div class="test-duration">0.011s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toContain(expected) // indexOf
 
-      354 |           // Validate IP format
-      355 |           if (!ip.match(/^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/) &amp;&amp; !ip.match(/^(\d{1,3}|\*)(\.(\d{1,3}|\*)){3}$/)) {
-    &gt; 356 |             throw new SecurityError(
-          |                   ^
-      357 |               SecurityErrorType.INVALID_CONFIG,
-      358 |               'Invalid IP format'
-      359 |             );
-
-      at src/security/access.ts:356:19
-          at Array.forEach (&lt;anonymous&gt;)
-      at AccessControlManager.forEach [as validateRule] (src/security/access.ts:346:39)
-      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
-      at tests/security/access.test.ts:237:34
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:242:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:242:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AccessControlManager &gt; validation</div><div class="test-title">should validate day numbers</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
-
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid day number"
-
-      326 |           time.days.forEach(day =&gt; {
-      327 |             if (typeof day !== 'number' || day &lt; 0 || day &gt; 6) {
-    &gt; 328 |               throw new SecurityError(
-          |                     ^
-      329 |                 SecurityErrorType.INVALID_CONFIG,
-      330 |                 'Invalid day number'
-      331 |               );
-
-      at src/security/access.ts:328:21
-          at Array.forEach (&lt;anonymous&gt;)
-      at AccessControlManager.forEach [as validateRule] (src/security/access.ts:326:21)
-      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
-      at tests/security/access.test.ts:246:34
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:253:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:253:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/identity/client.test.ts</div><div class="suite-time">0.299s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should create client with machine ID</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should create client without machine ID</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should increment instance number</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should fail with invalid user</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; createClient</div><div class="test-title">should fail with unauthorized machine</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClient</div><div class="test-title">should get existing client</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClient</div><div class="test-title">should fail for non-existent client</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClientsByUser</div><div class="test-title">should get all user clients</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClientsByUser</div><div class="test-title">should return empty array for user with no clients</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; getClientsByUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; updateClient</div><div class="test-title">should update client sessions</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; updateClient</div><div class="test-title">should fail with invalid updates</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; deleteClient</div><div class="test-title">should delete existing client</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; deleteClient</div><div class="test-title">should fail for non-existent client</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; validation</div><div class="test-title">should validate client ID format</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; validation</div><div class="test-title">should validate machine IDs</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">ClientManager &gt; validation</div><div class="test-title">should validate client type</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</pre></div></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/identity/user.test.ts</div><div class="suite-time">0.245s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; createUser</div><div class="test-title">should create user with machine ID</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:51:20)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; createUser</div><div class="test-title">should create user without machine ID</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:64:20)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UserManager &gt; createUser</div><div class="test-title">should fail with invalid machine ID</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUser</div><div class="test-title">should get existing user</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:81:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "USER_NOT_FOUND"
-Received message:   "User not found"
-
-      141 |         throw error;
-      142 |       }
-    &gt; 143 |       throw new IdentityError(
-          |             ^
-      144 |         IdentityErrorType.USER_NOT_FOUND,
-      145 |         'User not found',
-      146 |         error
-
-      at UserManager.getUser (src/identity/user.ts:143:13)
-      at Object.&lt;anonymous&gt; (tests/identity/user.test.ts:88:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:90:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUserByMachine</div><div class="test-title">should get user by machine ID</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:97:23)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; getUserByMachine</div><div class="test-title">should fail for unknown machine ID</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "USER_NOT_FOUND"
-Received message:   "No user found for machine ID"
-
-      170 |       }
-      171 |
-    &gt; 172 |       throw new IdentityError(
-          |             ^
-      173 |         IdentityErrorType.USER_NOT_FOUND,
-      174 |         'No user found for machine ID'
-      175 |       );
-
-      at UserManager.getUserByMachine (src/identity/user.ts:172:13)
-      at Object.&lt;anonymous&gt; (tests/identity/user.test.ts:104:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:106:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; updateUser</div><div class="test-title">should update user preferences</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:112:20)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; updateUser</div><div class="test-title">should add machine ID</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:125:20)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; updateUser</div><div class="test-title">should fail with invalid updates</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:135:20)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; deleteUser</div><div class="test-title">should delete existing user</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:146:20)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; deleteUser</div><div class="test-title">should fail for non-existent user</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "USER_NOT_FOUND"
-Received message:   "Failed to delete user"
-
-      236 |       );
-      237 |     } catch (error) {
-    &gt; 238 |       throw new IdentityError(
-          |             ^
-      239 |         IdentityErrorType.USER_NOT_FOUND,
-      240 |         'Failed to delete user',
-      241 |         error
-
-      at UserManager.deleteUser (src/identity/user.ts:238:13)
-      at Object.&lt;anonymous&gt; (tests/identity/user.test.ts:155:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:157:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; validation</div><div class="test-title">should validate user ID format</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: User manager not initialized
-    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:173:38)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; validation</div><div class="test-title">should validate machine IDs</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:178:20)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">UserManager &gt; validation</div><div class="test-title">should validate preferences</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">IdentityError: Failed to create user
-    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:184:20)</pre></div></div></div></details><details id="suite-7" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/generation/serverGenerator.test.ts</div><div class="suite-time">0s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+Expected substring: "recent-test"
+Received string:    ""
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/audit.test.ts:233:23)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; error handling</div><div class="test-title">should handle write errors</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; error handling</div><div class="test-title">should handle rotation errors gracefully</div><div class="test-status">passed</div><div class="test-duration">0.152s</div></div></div></div></details><details id="suite-11" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/generation/serverGenerator.test.ts</div><div class="suite-time">0s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
 
     tests/generation/serverGenerator.test.ts:54:25 - error TS18046: 'template' is of type 'unknown'.
 
@@ -1032,215 +603,4 @@ Received message:   "Failed to delete user"
         14   externalDependencies: DependencyMap;
              ~~~~~~~~~~~~~~~~~~~~
         The expected type comes from property 'externalDependencies' which is declared here on type 'PromptAnalysisResult'
-</pre></div></div></div></details><details id="suite-8" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/registration/storage.test.ts</div><div class="suite-time">0.201s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; initialization</div><div class="test-title">should create storage directory</div><div class="test-status">failed</div><div class="test-duration">0.026s</div></div><div class="failureMessages"> <pre class="failureMsg">StorageError: File not found
-    at PersistentStorage.read (/workspace/src/storage/persistentStorage.ts:118:15)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:58:21)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should save and retrieve record</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">RegistrationError: Failed to save registration record
-    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:66:7)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should return null for non-existent record</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">RegistrationError: Failed to read registration record
-    at FileStorage.get (/workspace/src/registration/storage.ts:106:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:73:22)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should list all records</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">RegistrationError: Failed to save registration record
-    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
-    at async Promise.all (index 0)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:84:7)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should delete record</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">RegistrationError: Failed to save registration record
-    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:93:7)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; record management</div><div class="test-title">should handle deleting non-existent record</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).resolves.not.toThrow()
-
-Received promise rejected instead of resolved
-Rejected to value: [RegistrationError: Failed to delete registration record]
-    at expect (/workspace/node_modules/expect/build/index.js:113:15)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:101:13)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; retention</div><div class="test-title">should enforce max records limit</div><div class="test-status">failed</div><div class="test-duration">0.008s</div></div><div class="failureMessages"> <pre class="failureMsg">RegistrationError: Failed to save registration record
-    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:127:9)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; retention</div><div class="test-title">should clean up old records</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">RegistrationError: Failed to save registration record
-    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:141:7)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; error handling</div><div class="test-title">should handle storage read errors</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "PERSISTENCE_FAILED"
-Received message:   "Failed to list registration records"
-
-      131 |       return records;
-      132 |     } catch (error) {
-    &gt; 133 |       throw new RegistrationError(
-          |             ^
-      134 |         RegistrationErrorType.PERSISTENCE_FAILED,
-      135 |         'Failed to list registration records',
-      136 |         error
-
-      at FileStorage.list (src/registration/storage.ts:133:13)
-      at Object.&lt;anonymous&gt; (tests/registration/storage.test.ts:165:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:167:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">FileStorage &gt; error handling</div><div class="test-title">should handle storage write errors</div><div class="test-status">failed</div><div class="test-duration">0.002s</div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: jest is not defined
-    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:172:7)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div></div></details><details id="suite-9" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/audit.test.ts</div><div class="suite-time">1.646s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; initialization</div><div class="test-title">should create log directory</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; initialization</div><div class="test-title">should not create directory when disabled</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; logging</div><div class="test-title">should write log entry</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; logging</div><div class="test-title">should not write when disabled</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; logging</div><div class="test-title">should include metadata</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; rotation</div><div class="test-title">should rotate log file on interval</div><div class="test-status">passed</div><div class="test-duration">1.116s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; rotation</div><div class="test-title">should rotate log file on size limit</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; cleanup</div><div class="test-title">should delete old log files</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; cleanup</div><div class="test-title">should keep recent log files</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; error handling</div><div class="test-title">should handle write errors</div><div class="test-status">failed</div><div class="test-duration">0.025s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).rejects.toThrow(expected)
-
-Expected substring: "AUDIT_FAILED"
-Received message:   "Failed to initialize audit logger"
-
-      64 |       await this.cleanupOldLogs();
-      65 |     } catch (error) {
-    &gt; 66 |       throw new SecurityError(
-         |             ^
-      67 |         SecurityErrorType.AUDIT_FAILED,
-      68 |         'Failed to initialize audit logger',
-      69 |         error
-
-      at AuditLogger.initialize (src/security/audit.ts:66:13)
-      at Object.&lt;anonymous&gt; (tests/security/audit.test.ts:248:7)
-    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/audit.test.ts:250:10)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AuditLogger &gt; error handling</div><div class="test-title">should handle rotation errors gracefully</div><div class="test-status">passed</div><div class="test-duration">0.152s</div></div></div></div></details><details id="suite-10" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/ratelimit.test.ts</div><div class="suite-time">1.436s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; initialization</div><div class="test-title">should initialize with valid config</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; initialization</div><div class="test-title">should fail with invalid storage type</div><div class="test-status">failed</div><div class="test-duration">0.019s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toThrow(expected)
-
-Expected substring: "INVALID_CONFIG"
-Received message:   "Invalid storage type"
-
-      209 |         );
-      210 |       default:
-    &gt; 211 |         throw new SecurityError(
-          |               ^
-      212 |           SecurityErrorType.INVALID_CONFIG,
-      213 |           'Invalid storage type'
-      214 |         );
-
-      at RateLimiter.createStorage (src/security/ratelimit.ts:211:15)
-      at new createStorage (src/security/ratelimit.ts:75:25)
-      at tests/security/ratelimit.test.ts:43:20
-      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
-      at Object.&lt;anonymous&gt; (tests/security/ratelimit.test.ts:49:11)
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:49:11)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rate limiting</div><div class="test-title">should allow requests within limit</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 3
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:58:32)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rate limiting</div><div class="test-title">should block requests over limit</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: false
-Received: true
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:81:30)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rate limiting</div><div class="test-title">should reset after window</div><div class="test-status">failed</div><div class="test-duration">1.104s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 3
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:97:32)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rule matching</div><div class="test-title">should match resource patterns</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 3
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:132:32)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rule matching</div><div class="test-title">should match user identity</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 3
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:141:32)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; rule matching</div><div class="test-title">should match client identity</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 5
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:157:32)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; multiple rules</div><div class="test-title">should use most restrictive limit</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; multiple rules</div><div class="test-title">should track limits independently</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 3
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:212:32)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; disabled state</div><div class="test-title">should allow all requests when disabled</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">RateLimiter &gt; disabled state</div><div class="test-title">should not track requests when disabled</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 3
-Received: Infinity
-    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:271:32)</pre></div></div></div></details><details id="suite-11" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/server.test.ts</div><div class="suite-time">0.31s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; StateManager</div><div class="test-title">should manage client connections</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; StateManager</div><div class="test-title">should track task state</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; Router</div><div class="test-title">should route messages based on rules</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">MCP Bridge Server &gt; Router</div><div class="test-title">should handle missing target clients</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div></div></details><details id="suite-12" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/generation/promptAnalyzer.test.ts</div><div class="suite-time">0.531s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should return default dependency for null prompt</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should return default dependency for empty prompt</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should return default dependency for prompt with no dependencies</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should extract a simple dependency without version</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should extract a simple dependency with a specific version</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PromptAnalyzer - extractDependencies</div><div class="test-title">should extract multiple dependencies with and without versions</div><div class="test-status">failed</div><div class="test-duration">0.003s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 4
-+ Received  + 0
-
-@@ -7,14 +7,10 @@
-      },
-      "@reduxjs/toolkit": Object {
-        "reason": "Identified from prompt: @reduxjs/toolkit@~1.9",
-        "version": "~1.9",
-      },
--     "axios": Object {
--       "reason": "Identified from prompt: axios",
--       "version": "latest",
--     },
-      "react": Object {
-        "reason": "Identified from prompt: react@^18.2.0",
-        "version": "^18.2.0",
-      },
-    },
-    at Object.&lt;anonymous&gt; (/workspace/tests/generation/promptAnalyzer.test.ts:79:54)
-    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
-    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</pre></div></div></div></details></main></body></html>
+</pre></div></div></div></details><details id="suite-12" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/workspace/tests/security/encryption.test.ts</div><div class="suite-time">0.409s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; initialization</div><div class="test-title">should initialize with valid config</div><div class="test-status">passed</div><div class="test-duration">0.015s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; initialization</div><div class="test-title">should fail with invalid config</div><div class="test-status">passed</div><div class="test-duration">0.015s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; initialization</div><div class="test-title">should fail with invalid key derivation</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should encrypt and decrypt data</div><div class="test-status">passed</div><div class="test-duration">0.017s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail when encryption is disabled</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail with algorithm mismatch</div><div class="test-status">passed</div><div class="test-duration">0.011s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail with tampered data</div><div class="test-status">passed</div><div class="test-duration">0.016s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; encryption/decryption</div><div class="test-title">should fail with tampered tag</div><div class="test-status">passed</div><div class="test-duration">0.023s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; key derivation</div><div class="test-title">should work with PBKDF2</div><div class="test-status">passed</div><div class="test-duration">0.022s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; key derivation</div><div class="test-title">should work with scrypt</div><div class="test-status">passed</div><div class="test-duration">0.167s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; key derivation</div><div class="test-title">should fail with Argon2</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; algorithms</div><div class="test-title">should work with AES-256-GCM</div><div class="test-status">passed</div><div class="test-duration">0.02s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">EncryptionManager &gt; algorithms</div><div class="test-title">should work with AES-256-CBC</div><div class="test-status">passed</div><div class="test-duration">0.021s</div></div></div></div></details></main></body></html>

@@ -67,11 +67,13 @@ export class AccessControlManager {
 
             // Check time range
             if (restriction.start && restriction.end) {
-              const start = new Date(`1970-01-01T${restriction.start}Z`);
-              const end = new Date(`1970-01-01T${restriction.end}Z`);
-              const current = new Date(`1970-01-01T${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}Z`);
+              const [sh, sm] = restriction.start.split(':').map(Number);
+              const [eh, em] = restriction.end.split(':').map(Number);
+              const currentMinutes = (time.getHours() * 60) + time.getMinutes();
+              const startMinutes = (sh * 60) + (sm || 0);
+              const endMinutes = (eh * 60) + (em || 0);
 
-              if (current < start || current > end) {
+              if (currentMinutes < startMinutes || currentMinutes > endMinutes) {
                 return false;
               }
             }
@@ -184,19 +186,10 @@ export class AccessControlManager {
    */
   private matchResource(resource: string, patterns: string[]): boolean {
     return patterns.some(pattern => {
-      // Convert glob pattern to regex
-      const regex = new RegExp(
-        '^' +
-        pattern
-          .replace(/\*/g, '.*')
-          .replace(/\?/g, '.')
-          .replace(/\[!/g, '[^')
-          .replace(/\[/g, '[')
-          .replace(/\]/g, ']')
-          .replace(/\./g, '\\.') +
-        '$'
-      );
-
+      // Escape regex special characters first, then convert glob tokens
+      let escaped = pattern.replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&');
+      escaped = escaped.replace(/\\\*/g, '.*').replace(/\\\?/g, '.');
+      const regex = new RegExp('^' + escaped + '$');
       return regex.test(resource);
     });
   }

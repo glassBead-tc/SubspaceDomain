@@ -79,7 +79,7 @@ export class SecurityError extends Error {
     message: string,
     public metadata?: any
   ) {
-    super(message);
+    super(`${type}: ${message}`);
     this.name = 'SecurityError';
   }
 }

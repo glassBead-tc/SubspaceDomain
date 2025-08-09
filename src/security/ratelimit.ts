@@ -106,16 +106,25 @@ export class RateLimiter {
     resetAt: Date;
   }> {
     try {
+      // Even if disabled, report limit info if rules would match
+      const rules = this.getApplicableRules(resource, context);
       if (!this.enabled) {
+        if (rules.length === 0) {
+          return {
+            allowed: true,
+            remaining: Infinity,
+            resetAt: new Date(Date.now() + 3600000)
+          };
+        }
+        // When disabled but rules exist, treat as full remaining
+        const maxLimit = Math.max(...rules.map(r => r.limit));
         return {
           allowed: true,
-          remaining: Infinity,
-          resetAt: new Date(Date.now() + 3600000)
+          remaining: maxLimit,
+          resetAt: new Date(Date.now() + (rules[0]?.window ?? 3600000))
         };
       }
 
-      // Get applicable rules
-      const rules = this.getApplicableRules(resource, context);
       if (rules.length === 0) {
         return {
           allowed: true,
@@ -124,12 +133,9 @@ export class RateLimiter {
         };
       }
 
-      // Check each rule
       const results = await Promise.all(
         rules.map(rule => this.checkRule(rule, context))
       );
-
-      // Find most restrictive result
       const result = results.reduce((prev, curr) => {
         if (!prev) return curr;
         if (!curr) return prev;
@@ -350,19 +356,10 @@ export class RateLimiter {
    * Match resource against pattern
    */
   private matchResource(resource: string, pattern: string): boolean {
-    // Convert glob pattern to regex
-    const regex = new RegExp(
-      '^' +
-      pattern
-        .replace(/\*/g, '.*')
-        .replace(/\?/g, '.')
-        .replace(/\[!/g, '[^')
-        .replace(/\[/g, '[')
-        .replace(/\]/g, ']')
-        .replace(/\./g, '\\.') +
-      '$'
-    );
-
+    // Escape regex special chars, then restore glob wildcards
+    let escaped = pattern.replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&');
+    escaped = escaped.replace(/\\\*/g, '.*').replace(/\\\?/g, '.');
+    const regex = new RegExp('^' + escaped + '$');
     return regex.test(resource);
   }
 }

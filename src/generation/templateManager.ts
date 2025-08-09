@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { ServerTemplate, TemplateFormat, TemplateOptions } from './types.js';
 
-export class TemplateManager {
+export default class TemplateManager {
   private templates: Map<string, ServerTemplate> = new Map();
   private readonly templatesDir: string;
 
@@ -260,5 +260,3 @@ server.run().catch(console.error);
     }
   }
 }
-
-export default TemplateManager;

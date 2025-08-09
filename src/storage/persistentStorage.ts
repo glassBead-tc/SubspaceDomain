@@ -85,6 +85,19 @@ export class PersistentStorage {
     const fullPath = this.getFullPath(path);
 
     try {
+      // If path is a directory, return list of file names
+      const stat = await fs.stat(fullPath).catch(() => null);
+      if (stat && stat.isDirectory()) {
+        const entries = await fs.readdir(fullPath);
+        // Emit read event for directory
+        this.emitEvent({
+          type: StorageEventType.READ,
+          path,
+          timestamp: new Date()
+        });
+        return entries as unknown as T;
+      }
+
       // Read file
       const data = await fs.readFile(fullPath);
 
@@ -137,6 +150,10 @@ export class PersistentStorage {
     const fullPath = this.getFullPath(path);
 
     try {
+      // Ensure parent directory exists
+      const parentDir = dirname(fullPath);
+      await fs.mkdir(parentDir, { recursive: true });
+
       // Create metadata
       const metadata: StorageMetadata = {
         version: '1.0',

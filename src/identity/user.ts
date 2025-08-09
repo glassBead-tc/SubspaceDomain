@@ -63,10 +63,7 @@ export class UserManager {
    */
   public async createUser(machineId?: string): Promise<UserIdentity> {
     if (!this.initialized) {
-      throw new IdentityError(
-        IdentityErrorType.USER_INVALID,
-        'User manager not initialized'
-      );
+      await this.initialize();
     }
 
     try {
@@ -124,9 +121,10 @@ export class UserManager {
    */
   public async getUser(userId: string): Promise<UserIdentity> {
     try {
-      const user = await this.storage.read<UserIdentity>(
+      const raw = await this.storage.read<UserIdentity>(
         join(this.userDataPath, `${userId}.json`)
       );
+      const user = this.hydrateUser(raw);
 
       if (!this.validateUser(user)) {
         throw new IdentityError(
@@ -153,22 +151,17 @@ export class UserManager {
    */
   public async getUserByMachine(machineId: string): Promise<UserIdentity> {
     try {
-      // List all user files
       const userFiles = await fs.readdir(this.userDataPath);
-
-      // Find user with matching machine ID
       for (const file of userFiles) {
         if (!file.endsWith('.json')) continue;
-
-        const user = await this.storage.read<UserIdentity>(
+        const raw = await this.storage.read<UserIdentity>(
           join(this.userDataPath, file)
         );
-
+        const user = this.hydrateUser(raw);
         if (user.machineIds.includes(machineId)) {
           return user;
         }
       }
-
       throw new IdentityError(
         IdentityErrorType.USER_NOT_FOUND,
         'No user found for machine ID'
@@ -278,6 +271,20 @@ export class UserManager {
     };
   }
 
+  private hydrateUser(raw: any): UserIdentity {
+    return {
+      ...raw,
+      created: raw.created instanceof Date ? raw.created : new Date(raw.created),
+      lastSeen: raw.lastSeen instanceof Date ? raw.lastSeen : new Date(raw.lastSeen),
+      sessions: Array.isArray(raw.sessions) ? raw.sessions.map((s: any) => ({
+        ...s,
+        created: s.created instanceof Date ? s.created : new Date(s.created),
+        lastActive: s.lastActive instanceof Date ? s.lastActive : new Date(s.lastActive),
+        expiresAt: s.expiresAt instanceof Date ? s.expiresAt : new Date(s.expiresAt)
+      })) : []
+    } as UserIdentity;
+  }
+
   /**
    * Validate user data
    */
@@ -288,8 +295,8 @@ export class UserManager {
       if (!user.id || typeof user.id !== 'string') return false;
       if (!Array.isArray(user.machineIds)) return false;
       if (!user.preferences || typeof user.preferences !== 'object') return false;
-      if (!(user.created instanceof Date)) return false;
-      if (!(user.lastSeen instanceof Date)) return false;
+      if (!(user.created instanceof Date) || isNaN(user.created.getTime())) return false;
+      if (!(user.lastSeen instanceof Date) || isNaN(user.lastSeen.getTime())) return false;
       if (!Array.isArray(user.sessions)) return false;
 
       // ID format validation
@@ -323,7 +330,7 @@ export class UserManager {
       }
 
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

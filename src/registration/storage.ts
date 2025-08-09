@@ -7,6 +7,7 @@ import {
   RegistrationErrorType
 } from './types.js';
 import { PersistentStorage } from '../storage/persistentStorage.js';
+import { StorageError, StorageErrorType } from '../storage/types.js';
 
 /**
  * File storage options
@@ -96,11 +97,12 @@ export class FileStorage implements RegistrationStorage {
    */
   public async get(id: string): Promise<RegistrationRecord | null> {
     try {
-      return await this.storage.read<RegistrationRecord>(
+      const raw = await this.storage.read<RegistrationRecord>(
         this.getRecordPath(id)
       );
+      return this.hydrateRecord(raw);
     } catch (error: any) {
-      if (error?.code === 'ENOENT') {
+      if (error instanceof StorageError && error.type === StorageErrorType.FILE_NOT_FOUND) {
         return null;
       }
       throw new RegistrationError(
@@ -117,14 +119,23 @@ export class FileStorage implements RegistrationStorage {
   public async list(): Promise<RegistrationRecord[]> {
     try {
       // Get all record files
-      const files = await this.storage.read<string[]>(this.directory);
+      let files: string[] = [];
+      try {
+        files = await this.storage.read<string[]>(this.directory);
+      } catch (err) {
+        // If directory doesn't exist yet, treat as empty list
+        if (err instanceof StorageError && err.type === StorageErrorType.FILE_NOT_FOUND) {
+          return [];
+        }
+        throw err;
+      }
 
       // Load each record
       const records = await Promise.all(
         files
           .filter(file => file.endsWith('.json'))
-          .map(file => this.storage.read<RegistrationRecord>(
-            join(this.directory, file)
+          .map(async file => this.hydrateRecord(
+            await this.storage.read<RegistrationRecord>(join(this.directory, file))
           ))
       );
 
@@ -145,13 +156,14 @@ export class FileStorage implements RegistrationStorage {
     try {
       await this.storage.delete(this.getRecordPath(id));
     } catch (error: any) {
-      if (error?.code !== 'ENOENT') {
-        throw new RegistrationError(
-          RegistrationErrorType.PERSISTENCE_FAILED,
-          'Failed to delete registration record',
-          error
-        );
+      if (error instanceof StorageError && error.type === StorageErrorType.FILE_NOT_FOUND) {
+        return; // Deleting non-existent is a no-op
       }
+      throw new RegistrationError(
+        RegistrationErrorType.PERSISTENCE_FAILED,
+        'Failed to delete registration record',
+        error
+      );
     }
   }
 
@@ -219,5 +231,25 @@ export class FileStorage implements RegistrationStorage {
     }
 
     return true;
+  }
+
+  private hydrateRecord(raw: any): RegistrationRecord {
+    return {
+      ...raw,
+      created: raw.created instanceof Date ? raw.created : new Date(raw.created),
+      lastUpdated: raw.lastUpdated instanceof Date ? raw.lastUpdated : new Date(raw.lastUpdated),
+      request: {
+        ...raw.request,
+        timestamp: raw.request.timestamp instanceof Date ? raw.request.timestamp : new Date(raw.request.timestamp)
+      },
+      response: {
+        ...raw.response,
+        expiresAt: raw.response.expiresAt instanceof Date ? raw.response.expiresAt : new Date(raw.response.expiresAt)
+      },
+      history: Array.isArray(raw.history) ? raw.history.map((h: any) => ({
+        ...h,
+        timestamp: h.timestamp instanceof Date ? h.timestamp : new Date(h.timestamp)
+      })) : []
+    } as RegistrationRecord;
   }
 }

@@ -7,7 +7,7 @@ import {
 } from './types.js';
 import TemplateManager from './templateManager.js';
 import DependencyResolver from './dependencyResolver.js';
-import { PromptAnalyzer } from './promptAnalyzer.js';
+import PromptAnalyzer from './promptAnalyzer.js';
 import { createHash } from 'crypto';
 
 export class ServerGenerator {
@@ -104,7 +104,7 @@ export class ServerGenerator {
     const handlers = await this.generateHandlers(capabilities);
 
     // Replace template variables
-    const replacements = {
+    const replacements: Record<string, string> = {
       serverName,
       version: '1.0.0',
       capabilities: JSON.stringify(capabilities, null, 2),

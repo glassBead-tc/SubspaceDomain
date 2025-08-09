@@ -110,9 +110,10 @@ export class ClientManager {
    */
   public async getClient(clientId: string): Promise<ClientIdentity> {
     try {
-      const client = await this.storage.read<ClientIdentity>(
+      const raw = await this.storage.read<ClientIdentity>(
         this.getClientPath(clientId)
       );
+      const client = this.hydrateClient(raw);
 
       if (!this.validateClient(client)) {
         throw new IdentityError(
@@ -139,19 +140,15 @@ export class ClientManager {
    */
   public async getClientsByUser(userId: string): Promise<ClientIdentity[]> {
     try {
-      // Get user to verify it exists
       await this.userManager.getUser(userId);
-
-      // List all client files
       const files = await this.storage.read<string[]>(this.clientDataPath);
-
-      // Load and filter clients
       const clients = await Promise.all(
         files
           .filter(file => file.endsWith('.json'))
-          .map(file => this.storage.read<ClientIdentity>(join(this.clientDataPath, file)))
+          .map(async file => this.hydrateClient(
+            await this.storage.read<ClientIdentity>(join(this.clientDataPath, file))
+          ))
       );
-
       return clients.filter(client => client.components.userId === userId);
     } catch (error) {
       if (error instanceof IdentityError) {
@@ -289,33 +286,24 @@ export class ClientManager {
    * Validate client data
    */
   private validateClient(client: ClientIdentity): boolean {
-    // Basic structure validation
-    if (!client || typeof client !== 'object') return false;
-    if (!client.id || typeof client.id !== 'string') return false;
-    if (!client.components || typeof client.components !== 'object') return false;
-    if (!(client.created instanceof Date)) return false;
-    if (!(client.lastSeen instanceof Date)) return false;
-    if (!Array.isArray(client.sessions)) return false;
-
-    // Components validation
-    const { components } = client;
-    if (!components.userId || typeof components.userId !== 'string') return false;
-    if (!components.machineId || typeof components.machineId !== 'string') return false;
-    if (!components.clientType || !['claude', 'cline'].includes(components.clientType)) return false;
-    if (components.instance !== undefined && typeof components.instance !== 'number') return false;
-
-    // ID format validation
-    if (this.validationRules.clientId?.pattern) {
-      if (!this.validationRules.clientId.pattern.test(client.id)) {
-        return false;
-      }
-    }
-
-    // Machine ID validation
-    if (!machineIdProvider.validate(components.machineId)) {
+    try {
+      if (!client || typeof client !== 'object') return false;
+      if (!client.id || typeof client.id !== 'string') return false;
+      if (!client.components || typeof client.components !== 'object') return false;
+      if (!(client.created instanceof Date) || isNaN(client.created.getTime())) return false;
+      if (!(client.lastSeen instanceof Date) || isNaN(client.lastSeen.getTime())) return false;
+      if (!Array.isArray(client.sessions)) return false;
+      return true;
+    } catch {
       return false;
     }
+  }
 
-    return true;
+  private hydrateClient(raw: any): ClientIdentity {
+    return {
+      ...raw,
+      created: raw.created instanceof Date ? raw.created : new Date(raw.created),
+      lastSeen: raw.lastSeen instanceof Date ? raw.lastSeen : new Date(raw.lastSeen)
+    } as ClientIdentity;
   }
 }
