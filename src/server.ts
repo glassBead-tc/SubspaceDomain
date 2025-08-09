@@ -203,7 +203,8 @@ export class BridgeServer {
             targetType: clientType
           },
           'unix-socket',
-          discoveredClients[0].id
+          discoveredClients[0].id,
+          discoveredClients[0].socketPath
         )
       ));
 
@@ -387,7 +388,7 @@ export class BridgeServer {
       case 'initiate':
         // Client wants to establish connection
         client.state = ConnectionState.HANDSHAKING;
-        client.capabilities = message.payload.capabilities;
+        client.registrationCapabilities = message.payload.capabilities;
         this.stateManager.updateClient(client);
 
         // Send connection request to target client
@@ -551,7 +552,7 @@ export class BridgeServer {
       this.connectionManager.handleRegistration(JSON.stringify(
         this.registrationProtocol.createRegisterMessage(
           client.type,
-          client.capabilities || {
+          client.registrationCapabilities || {
             supportedMethods: ['tools/call'],
             supportedTransports: [client.transport]
           },

@@ -1,17 +1,1299 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="6" failures="1" errors="0" time="0.626">
-  <testsuite name="PromptAnalyzer - extractDependencies" errors="0" failures="1" skipped="0" timestamp="2025-04-15T18:25:46" time="0.591" tests="6">
-    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for null prompt" time="0.001">
+<testsuites name="jest tests" tests="143" failures="91" errors="0" time="6.658">
+  <testsuite name="EncryptionManager" errors="0" failures="7" skipped="0" timestamp="2025-08-09T08:16:31" time="3.773" tests="13">
+    <testcase classname="tests/security/encryption.test.ts" name="should initialize with valid config" time="0.027">
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail with invalid config" time="0.028">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid encryption algorithm&quot;
+
+      255 |
+      256 |     if (!Object.values(EncryptionAlgorithm).includes(config.algorithm)) {
+    &gt; 257 |       throw new SecurityError(
+          |             ^
+      258 |         SecurityErrorType.INVALID_CONFIG,
+      259 |         &apos;Invalid encryption algorithm&apos;
+      260 |       );
+
+      at EncryptionManager.validateConfig (src/security/encryption.ts:257:13)
+      at new validateConfig (src/security/encryption.ts:33:10)
+      at tests/security/encryption.test.ts:53:20
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:67:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:67:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail with invalid key derivation" time="0.007">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid PBKDF2 iterations&quot;
+
+      295 |       case KeyDerivationFunction.PBKDF2:
+      296 |         if (!kdf.iterations || kdf.iterations &lt; 10000) {
+    &gt; 297 |           throw new SecurityError(
+          |                 ^
+      298 |             SecurityErrorType.INVALID_CONFIG,
+      299 |             &apos;Invalid PBKDF2 iterations&apos;
+      300 |           );
+
+      at EncryptionManager.validateConfig (src/security/encryption.ts:297:17)
+      at new validateConfig (src/security/encryption.ts:33:10)
+      at tests/security/encryption.test.ts:71:20
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:85:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:85:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should encrypt and decrypt data" time="0.019">
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail when encryption is disabled" time="0.007">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;ENCRYPTION_FAILED&quot;
+Received message:   &quot;Encryption is disabled&quot;
+
+      61 |     try {
+      62 |       if (!this.config.enabled) {
+    &gt; 63 |         throw new SecurityError(
+         |               ^
+      64 |           SecurityErrorType.ENCRYPTION_FAILED,
+      65 |           &apos;Encryption is disabled&apos;
+      66 |         );
+
+      at EncryptionManager.encrypt (src/security/encryption.ts:63:15)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:115:28)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:117:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail with algorithm mismatch" time="0.011">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;DECRYPTION_FAILED&quot;
+Received message:   &quot;Algorithm mismatch&quot;
+
+      142 |       // Validate algorithm
+      143 |       if (encrypted.algorithm !== this.config.algorithm) {
+    &gt; 144 |         throw new SecurityError(
+          |               ^
+      145 |           SecurityErrorType.DECRYPTION_FAILED,
+      146 |           &apos;Algorithm mismatch&apos;
+      147 |         );
+
+      at EncryptionManager.decrypt (src/security/encryption.ts:144:15)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:125:38)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:127:10)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail with tampered data" time="0.016">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;DECRYPTION_FAILED&quot;
+Received message:   &quot;Failed to decrypt data&quot;
+
+      179 |         throw error;
+      180 |       }
+    &gt; 181 |       throw new SecurityError(
+          |             ^
+      182 |         SecurityErrorType.DECRYPTION_FAILED,
+      183 |         &apos;Failed to decrypt data&apos;,
+      184 |         error
+
+      at EncryptionManager.decrypt (src/security/encryption.ts:181:13)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:135:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:137:10)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail with tampered tag" time="0.017">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;DECRYPTION_FAILED&quot;
+Received message:   &quot;Failed to decrypt data&quot;
+
+      179 |         throw error;
+      180 |       }
+    &gt; 181 |       throw new SecurityError(
+          |             ^
+      182 |         SecurityErrorType.DECRYPTION_FAILED,
+      183 |         &apos;Failed to decrypt data&apos;,
+      184 |         error
+
+      at EncryptionManager.decrypt (src/security/encryption.ts:181:13)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:147:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:149:10)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should work with PBKDF2" time="0.021">
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should work with scrypt" time="0.219">
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should fail with Argon2" time="0.006">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Argon2 is not yet supported&quot;
+
+      324 |
+      325 |       case KeyDerivationFunction.ARGON2:
+    &gt; 326 |         throw new SecurityError(
+          |               ^
+      327 |           SecurityErrorType.INVALID_CONFIG,
+      328 |           &apos;Argon2 is not yet supported&apos;
+      329 |         );
+
+      at EncryptionManager.validateConfig (src/security/encryption.ts:326:15)
+      at new validateConfig (src/security/encryption.ts:33:10)
+      at tests/security/encryption.test.ts:207:20
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/encryption.test.ts:221:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/encryption.test.ts:221:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should work with AES-256-GCM" time="0.02">
+    </testcase>
+    <testcase classname="tests/security/encryption.test.ts" name="should work with AES-256-CBC" time="0.031">
+    </testcase>
+  </testsuite>
+  <testsuite name="RegistrationManager" errors="0" failures="6" skipped="0" timestamp="2025-08-09T08:16:31" time="3.97" tests="17">
+    <testcase classname="tests/registration/manager.test.ts" name="should initialize with default config" time="0.004">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should not initialize when disabled" time="0.029">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;REQUEST_INVALID&quot;
+Received message:   &quot;Registration is disabled&quot;
+
+      142 |   public async handleRequest(request: RegistrationRequest): Promise&lt;RegistrationResponse&gt; {
+      143 |     if (!this.enabled) {
+    &gt; 144 |       throw new RegistrationError(
+          |             ^
+      145 |         RegistrationErrorType.REQUEST_INVALID,
+      146 |         &apos;Registration is disabled&apos;
+      147 |       );
+
+      at RegistrationManager.handleRequest (src/registration/manager.ts:144:13)
+      at Object.&lt;anonymous&gt; (tests/registration/manager.test.ts:50:45)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:52:10)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should handle registration request" time="0.001">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should approve registration" time="0">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should reject registration" time="0.001">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should track registration history" time="0">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should auto-approve matching client type" time="0">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should not auto-approve non-matching client type" time="0">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should check required capabilities" time="0.001">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should check excluded capabilities" time="0">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should call request hook" time="0">
+      <failure>ReferenceError: jest is not defined
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:168:25)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should call approve hook" time="0.001">
+      <failure>ReferenceError: jest is not defined
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:183:25)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should call reject hook" time="0">
+      <failure>ReferenceError: jest is not defined
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:201:24)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should set expiration times" time="0">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should expire records" time="0.151">
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should handle non-existent record" time="0.001">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;REQUEST_NOT_FOUND&quot;
+Received message:   &quot;Registration record not found&quot;
+
+      228 |     const record = await this.storage.get(id);
+      229 |     if (!record) {
+    &gt; 230 |       throw new RegistrationError(
+          |             ^
+      231 |         RegistrationErrorType.REQUEST_NOT_FOUND,
+      232 |         &apos;Registration record not found&apos;
+      233 |       );
+
+      at RegistrationManager.getRecord (src/registration/manager.ts:230:13)
+      at Object.&lt;anonymous&gt; (tests/registration/manager.test.ts:270:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:272:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/registration/manager.test.ts" name="should handle hook errors" time="0.001">
+      <failure>Error: expect(received).rejects.toThrow()
+
+Received promise resolved instead of rejected
+Resolved to value: {&quot;expiresAt&quot;: 2025-08-10T08:16:35.300Z, &quot;registrationId&quot;: &quot;6ecbce8e-bc3f-41c6-b6a5-8ba6497838a0&quot;, &quot;state&quot;: &quot;PENDING&quot;}
+    at expect (/workspace/node_modules/expect/build/index.js:113:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/manager.test.ts:286:13)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="SessionManager" errors="0" failures="17" skipped="0" timestamp="2025-08-09T08:16:31" time="3.996" tests="17">
+    <testcase classname="tests/identity/session.test.ts" name="should create session" time="0.007">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should enforce session limit" time="0.012">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail with invalid user" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail with unauthorized machine" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail with invalid client" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should get active session" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail for expired session" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail for non-existent session" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should get all user sessions" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should filter expired sessions" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail for non-existent user" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should update session timestamps" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail for expired session" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should end session and update client" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should fail for non-existent session" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should clean up expired sessions" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/session.test.ts" name="should validate session ID format" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/session.test.ts:57:36)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="AccessControlManager" errors="0" failures="9" skipped="0" timestamp="2025-08-09T08:16:35" time="0.333" tests="21">
+    <testcase classname="tests/security/access.test.ts" name="should initialize with valid config" time="0.002">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should fail with invalid rules" time="0.027">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Rules must be an array&quot;
+
+      256 |   private validateRules(rules: AccessRule[]): void {
+      257 |     if (!Array.isArray(rules)) {
+    &gt; 258 |       throw new SecurityError(
+          |             ^
+      259 |         SecurityErrorType.INVALID_CONFIG,
+      260 |         &apos;Rules must be an array&apos;
+      261 |       );
+
+      at AccessControlManager.validateRules (src/security/access.ts:258:13)
+      at new validateRules (src/security/access.ts:25:10)
+      at tests/security/access.test.ts:27:20
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:30:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:30:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should use default level when no rules match" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match resource patterns" time="0.005">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:49:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match user identity" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match client identity" time="0">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match machine identity" time="0">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should allow access during work hours" time="0">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should deny access outside work hours" time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:116:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should deny access on weekends" time="0">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match CIDR range" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match wildcard pattern" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should match exact IP" time="0">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should allow access from allowed locations" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should deny access from other locations" time="0">
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should add valid rule" time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:194:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should fail with invalid rule" time="0.001">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid access level&quot;
+
+      271 |     // Validate level
+      272 |     if (!Object.values(AccessLevel).includes(rule.level)) {
+    &gt; 273 |       throw new SecurityError(
+          |             ^
+      274 |         SecurityErrorType.INVALID_CONFIG,
+      275 |         &apos;Invalid access level&apos;
+      276 |       );
+
+      at AccessControlManager.validateRule (src/security/access.ts:273:13)
+      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
+      at tests/security/access.test.ts:203:34
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:204:10)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:204:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should remove rule" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:215:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should validate time format" time="0.001">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid time format for start time&quot;
+
+      303 |
+      304 |         if (time.start &amp;&amp; !time.start.match(/^\d{2}:\d{2}:\d{2}$/)) {
+    &gt; 305 |           throw new SecurityError(
+          |                 ^
+      306 |             SecurityErrorType.INVALID_CONFIG,
+      307 |             &apos;Invalid time format for start time&apos;
+      308 |           );
+
+      at AccessControlManager.validateRule (src/security/access.ts:305:17)
+      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
+      at tests/security/access.test.ts:225:34
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:233:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:233:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should validate IP format" time="0.001">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid IP format&quot;
+
+      354 |           // Validate IP format
+      355 |           if (!ip.match(/^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/) &amp;&amp; !ip.match(/^(\d{1,3}|\*)(\.(\d{1,3}|\*)){3}$/)) {
+    &gt; 356 |             throw new SecurityError(
+          |                   ^
+      357 |               SecurityErrorType.INVALID_CONFIG,
+      358 |               &apos;Invalid IP format&apos;
+      359 |             );
+
+      at src/security/access.ts:356:19
+          at Array.forEach (&lt;anonymous&gt;)
+      at AccessControlManager.forEach [as validateRule] (src/security/access.ts:346:39)
+      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
+      at tests/security/access.test.ts:237:34
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:242:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:242:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/access.test.ts" name="should validate day numbers" time="0.001">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid day number&quot;
+
+      326 |           time.days.forEach(day =&gt; {
+      327 |             if (typeof day !== &apos;number&apos; || day &lt; 0 || day &gt; 6) {
+    &gt; 328 |               throw new SecurityError(
+          |                     ^
+      329 |                 SecurityErrorType.INVALID_CONFIG,
+      330 |                 &apos;Invalid day number&apos;
+      331 |               );
+
+      at src/security/access.ts:328:21
+          at Array.forEach (&lt;anonymous&gt;)
+      at AccessControlManager.forEach [as validateRule] (src/security/access.ts:326:21)
+      at AccessControlManager.validateRule [as addRule] (src/security/access.ts:120:12)
+      at tests/security/access.test.ts:246:34
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/access.test.ts:253:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/access.test.ts:253:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="ClientManager" errors="0" failures="17" skipped="0" timestamp="2025-08-09T08:16:35" time="0.299" tests="17">
+    <testcase classname="tests/identity/client.test.ts" name="should create client with machine ID" time="0.003">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should create client without machine ID" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should increment instance number" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should fail with invalid user" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should fail with unauthorized machine" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should get existing client" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should fail for non-existent client" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should get all user clients" time="0.003">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should return empty array for user with no clients" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should fail for non-existent user" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should update client sessions" time="0.001">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should fail with invalid updates" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should delete existing client" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should fail for non-existent client" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should validate client ID format" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should validate machine IDs" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+    <testcase classname="tests/identity/client.test.ts" name="should validate client type" time="0">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/client.test.ts:45:36)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="UserManager" errors="0" failures="14" skipped="0" timestamp="2025-08-09T08:16:36" time="0.245" tests="15">
+    <testcase classname="tests/identity/user.test.ts" name="should create user with machine ID" time="0.004">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:51:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should create user without machine ID" time="0.003">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:64:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should fail with invalid machine ID" time="0.003">
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should get existing user" time="0.001">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:81:23)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should fail for non-existent user" time="0.003">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;USER_NOT_FOUND&quot;
+Received message:   &quot;User not found&quot;
+
+      141 |         throw error;
+      142 |       }
+    &gt; 143 |       throw new IdentityError(
+          |             ^
+      144 |         IdentityErrorType.USER_NOT_FOUND,
+      145 |         &apos;User not found&apos;,
+      146 |         error
+
+      at UserManager.getUser (src/identity/user.ts:143:13)
+      at Object.&lt;anonymous&gt; (tests/identity/user.test.ts:88:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:90:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should get user by machine ID" time="0.002">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:97:23)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should fail for unknown machine ID" time="0.002">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;USER_NOT_FOUND&quot;
+Received message:   &quot;No user found for machine ID&quot;
+
+      170 |       }
+      171 |
+    &gt; 172 |       throw new IdentityError(
+          |             ^
+      173 |         IdentityErrorType.USER_NOT_FOUND,
+      174 |         &apos;No user found for machine ID&apos;
+      175 |       );
+
+      at UserManager.getUserByMachine (src/identity/user.ts:172:13)
+      at Object.&lt;anonymous&gt; (tests/identity/user.test.ts:104:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:106:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should update user preferences" time="0.002">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:112:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should add machine ID" time="0.002">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:125:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should fail with invalid updates" time="0.001">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:135:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should delete existing user" time="0.001">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:146:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should fail for non-existent user" time="0.002">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;USER_NOT_FOUND&quot;
+Received message:   &quot;Failed to delete user&quot;
+
+      236 |       );
+      237 |     } catch (error) {
+    &gt; 238 |       throw new IdentityError(
+          |             ^
+      239 |         IdentityErrorType.USER_NOT_FOUND,
+      240 |         &apos;Failed to delete user&apos;,
+      241 |         error
+
+      at UserManager.deleteUser (src/identity/user.ts:238:13)
+      at Object.&lt;anonymous&gt; (tests/identity/user.test.ts:155:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:157:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should validate user ID format" time="0.002">
+      <failure>IdentityError: User manager not initialized
+    at UserManager.createUser (/workspace/src/identity/user.ts:66:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:173:38)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should validate machine IDs" time="0.001">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:178:20)</failure>
+    </testcase>
+    <testcase classname="tests/identity/user.test.ts" name="should validate preferences" time="0.002">
+      <failure>IdentityError: Failed to create user
+    at UserManager.createUser (/workspace/src/identity/user.ts:114:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/identity/user.test.ts:184:20)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="FileStorage" errors="0" failures="10" skipped="0" timestamp="2025-08-09T08:16:36" time="0.201" tests="10">
+    <testcase classname="tests/registration/storage.test.ts" name="should create storage directory" time="0.026">
+      <failure>StorageError: File not found
+    at PersistentStorage.read (/workspace/src/storage/persistentStorage.ts:118:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:58:21)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should save and retrieve record" time="0.003">
+      <failure>RegistrationError: Failed to save registration record
+    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:66:7)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should return null for non-existent record" time="0.002">
+      <failure>RegistrationError: Failed to read registration record
+    at FileStorage.get (/workspace/src/registration/storage.ts:106:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:73:22)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should list all records" time="0.003">
+      <failure>RegistrationError: Failed to save registration record
+    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
+    at async Promise.all (index 0)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:84:7)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should delete record" time="0.002">
+      <failure>RegistrationError: Failed to save registration record
+    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:93:7)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should handle deleting non-existent record" time="0.003">
+      <failure>Error: expect(received).resolves.not.toThrow()
+
+Received promise rejected instead of resolved
+Rejected to value: [RegistrationError: Failed to delete registration record]
+    at expect (/workspace/node_modules/expect/build/index.js:113:15)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:101:13)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should enforce max records limit" time="0.008">
+      <failure>RegistrationError: Failed to save registration record
+    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:127:9)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should clean up old records" time="0.002">
+      <failure>RegistrationError: Failed to save registration record
+    at FileStorage.save (/workspace/src/registration/storage.ts:86:13)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:141:7)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should handle storage read errors" time="0.004">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;PERSISTENCE_FAILED&quot;
+Received message:   &quot;Failed to list registration records&quot;
+
+      131 |       return records;
+      132 |     } catch (error) {
+    &gt; 133 |       throw new RegistrationError(
+          |             ^
+      134 |         RegistrationErrorType.PERSISTENCE_FAILED,
+      135 |         &apos;Failed to list registration records&apos;,
+      136 |         error
+
+      at FileStorage.list (src/registration/storage.ts:133:13)
+      at Object.&lt;anonymous&gt; (tests/registration/storage.test.ts:165:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:167:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/registration/storage.test.ts" name="should handle storage write errors" time="0.002">
+      <failure>ReferenceError: jest is not defined
+    at Object.&lt;anonymous&gt; (/workspace/tests/registration/storage.test.ts:172:7)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="AuditLogger" errors="0" failures="1" skipped="0" timestamp="2025-08-09T08:16:35" time="1.646" tests="11">
+    <testcase classname="tests/security/audit.test.ts" name="should create log directory" time="0.014">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should not create directory when disabled" time="0.004">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should write log entry" time="0.004">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should not write when disabled" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should include metadata" time="0.003">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should rotate log file on interval" time="1.116">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should rotate log file on size limit" time="0.003">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should delete old log files" time="0.002">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should keep recent log files" time="0.003">
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should handle write errors" time="0.025">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;AUDIT_FAILED&quot;
+Received message:   &quot;Failed to initialize audit logger&quot;
+
+      64 |       await this.cleanupOldLogs();
+      65 |     } catch (error) {
+    &gt; 66 |       throw new SecurityError(
+         |             ^
+      67 |         SecurityErrorType.AUDIT_FAILED,
+      68 |         &apos;Failed to initialize audit logger&apos;,
+      69 |         error
+
+      at AuditLogger.initialize (src/security/audit.ts:66:13)
+      at Object.&lt;anonymous&gt; (tests/security/audit.test.ts:248:7)
+    at Object.toThrow (/workspace/node_modules/expect/build/index.js:218:22)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/audit.test.ts:250:10)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/audit.test.ts" name="should handle rotation errors gracefully" time="0.152">
+    </testcase>
+  </testsuite>
+  <testsuite name="RateLimiter" errors="0" failures="9" skipped="0" timestamp="2025-08-09T08:16:35" time="1.436" tests="12">
+    <testcase classname="tests/security/ratelimit.test.ts" name="should initialize with valid config" time="0.002">
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should fail with invalid storage type" time="0.019">
+      <failure>Error: expect(received).toThrow(expected)
+
+Expected substring: &quot;INVALID_CONFIG&quot;
+Received message:   &quot;Invalid storage type&quot;
+
+      209 |         );
+      210 |       default:
+    &gt; 211 |         throw new SecurityError(
+          |               ^
+      212 |           SecurityErrorType.INVALID_CONFIG,
+      213 |           &apos;Invalid storage type&apos;
+      214 |         );
+
+      at RateLimiter.createStorage (src/security/ratelimit.ts:211:15)
+      at new createStorage (src/security/ratelimit.ts:75:25)
+      at tests/security/ratelimit.test.ts:43:20
+      at Object.&lt;anonymous&gt; (node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:320:21)
+      at Object.&lt;anonymous&gt; (tests/security/ratelimit.test.ts:49:11)
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:49:11)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should allow requests within limit" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:58:32)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should block requests over limit" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:81:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should reset after window" time="1.104">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:97:32)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should match resource patterns" time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:132:32)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should match user identity" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:141:32)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should match client identity" time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 5
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:157:32)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should use most restrictive limit" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should track limits independently" time="0.001">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:212:32)</failure>
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should allow all requests when disabled" time="0.001">
+    </testcase>
+    <testcase classname="tests/security/ratelimit.test.ts" name="should not track requests when disabled" time="0">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 3
+Received: Infinity
+    at Object.&lt;anonymous&gt; (/workspace/tests/security/ratelimit.test.ts:271:32)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="MCP Bridge Server" errors="0" failures="0" skipped="0" timestamp="2025-08-09T08:16:36" time="0.31" tests="4">
+    <testcase classname="tests/server.test.ts" name="should manage client connections" time="0.002">
+    </testcase>
+    <testcase classname="tests/server.test.ts" name="should track task state" time="0.001">
+    </testcase>
+    <testcase classname="tests/server.test.ts" name="should route messages based on rules" time="0.007">
+    </testcase>
+    <testcase classname="tests/server.test.ts" name="should handle missing target clients" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="PromptAnalyzer - extractDependencies" errors="0" failures="1" skipped="0" timestamp="2025-08-09T08:16:36" time="0.531" tests="6">
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for null prompt" time="0.005">
     </testcase>
     <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for empty prompt" time="0.001">
     </testcase>
-    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for prompt with no dependencies" time="0">
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should return default dependency for prompt with no dependencies" time="0.001">
     </testcase>
     <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract a simple dependency without version" time="0.001">
     </testcase>
-    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract a simple dependency with a specific version" time="0">
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract a simple dependency with a specific version" time="0.001">
     </testcase>
-    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract multiple dependencies with and without versions" time="0.002">
+    <testcase classname="tests/generation/promptAnalyzer.test.ts" name="should extract multiple dependencies with and without versions" time="0.003">
       <failure>Error: expect(received).toEqual(expected) // deep equality
 
 - Expected  - 4
@@ -32,20 +1314,21 @@
         &quot;version&quot;: &quot;^18.2.0&quot;,
       },
     },
-    at Object.&lt;anonymous&gt; (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/tests/generation/promptAnalyzer.test.ts:79:54)
-    at Promise.then.completed (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/utils.js:298:28)
+    at Object.&lt;anonymous&gt; (/workspace/tests/generation/promptAnalyzer.test.ts:79:54)
+    at Promise.then.completed (/workspace/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at _runTest (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:121:9)
-    at run (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/Users/b.c.nims/MCP/Client to Client/mcp-bridge-server/node_modules/jest-runner/build/runTest.js:444:34)</failure>
+    at callAsyncCircusFn (/workspace/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspace/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/workspace/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspace/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspace/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspace/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspace/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspace/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/workspace/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
     </testcase>
   </testsuite>
 </testsuites>

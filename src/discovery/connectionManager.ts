@@ -372,6 +372,32 @@ export class ConnectionManager extends EventEmitter {
     }
   }
 
+  public handleRegistration(message: string): void {
+    try {
+      const parsed = JSON.parse(message);
+      if (parsed && parsed.type === 'REGISTER') {
+        const clientId: string = parsed.clientId;
+        const clientType: 'claude' | 'cline' | 'other' = parsed.clientType;
+        const transport: 'stdio' | 'http' | 'unix-socket' = parsed.transport;
+        const existing = this.connectedClients.get(clientId);
+        const updated = {
+          id: clientId,
+          type: clientType,
+          transport,
+          connected: true,
+          lastSeen: new Date(),
+          state: ConnectionState.CONNECTED,
+          registrationCapabilities: parsed.capabilities,
+          socketPath: parsed.socketPath ?? existing?.socketPath
+        };
+        this.connectedClients.set(clientId, updated);
+        this.emit(ConnectionEvent.CLIENT_CONNECTED, updated);
+      }
+    } catch (error) {
+      this.logger.error('Failed to handle registration message', error as Error);
+    }
+  }
+
   // Removed handleRegistration method
   // Removed startHeartbeat, stopHeartbeat, sendHeartbeat methods
   

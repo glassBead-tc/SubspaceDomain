@@ -1,3 +1,5 @@
+import { ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
+export type MCPServerCapabilities = ServerCapabilities;
 export interface ServerTemplate {
     version: string;
     template: string;
@@ -74,7 +76,7 @@ export interface ResourcePrediction {
 }
 export interface GenerationContext {
     prompt: string;
-    capabilities: MCPServerCapabilities;
+    capabilities: ServerCapabilities;
     template: ServerTemplate;
     dependencies: ResolvedDependencies;
     resources: ResourcePrediction;

@@ -150,7 +150,7 @@ export class BridgeServer {
                 supportedMethods: ['tools/call'],
                 supportedTransports: ['unix-socket'],
                 targetType: clientType
-            }, 'unix-socket', discoveredClients[0].id)));
+            }, 'unix-socket', discoveredClients[0].id, discoveredClients[0].socketPath)));
             return {
                 found: true,
                 client: discoveredClients[0]
@@ -305,7 +305,7 @@ export class BridgeServer {
             case 'initiate':
                 // Client wants to establish connection
                 client.state = ConnectionState.HANDSHAKING;
-                client.capabilities = message.payload.capabilities;
+                client.registrationCapabilities = message.payload.capabilities;
                 this.stateManager.updateClient(client);
                 // Send connection request to target client
                 const targetClient = this.findTargetClient(message);
@@ -441,7 +441,7 @@ export class BridgeServer {
         this.discoveryManager.registerClient(client);
         // Handle registration message
         if (client.connected) {
-            this.connectionManager.handleRegistration(JSON.stringify(this.registrationProtocol.createRegisterMessage(client.type, client.capabilities || {
+            this.connectionManager.handleRegistration(JSON.stringify(this.registrationProtocol.createRegisterMessage(client.type, client.registrationCapabilities || {
                 supportedMethods: ['tools/call'],
                 supportedTransports: [client.transport]
             }, client.transport, client.id, client.socketPath)));
